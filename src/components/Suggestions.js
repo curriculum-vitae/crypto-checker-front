@@ -82,11 +82,9 @@ const styles = theme => ({
   },
 
   inputRoot: {
-    flexWrap: "wrap",
     width: "100%"
   },
   inputInput: {
-    width: "auto",
     width: "100%"
   }
 });
