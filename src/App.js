@@ -1,5 +1,3 @@
-import "./App.css";
-
 import {
   Button,
   CssBaseline,
@@ -92,6 +90,7 @@ const Form = flow(
       color={"primary"}
       variant={"contained"}
       onClick={() => onSubmit({ ip, port, coin })}
+      disabled={!port || !coin || !ip}
     >
       Check
     </Button>
