@@ -26,7 +26,7 @@ const getPort = label =>
 
 const Form = flow(
   withState("ip", "setIP"),
-  withState("port", "setPort"),
+  withState("port", "setPort", "Test"),
   withState("coin", "setCoin")
 )(({ ip, port, coin, setIP, setPort, setCoin }) => (
   <>
@@ -35,6 +35,7 @@ const Form = flow(
     <Grid container spacing={16}>
       <Grid item xs={9} sm={10}>
         <TextFieldEditable
+          autoFocus={false}
           label={"IP"}
           fullWidth
           onChange={e => setIP(e.target.value)}
@@ -44,8 +45,10 @@ const Form = flow(
         <TextFieldEditable
           label={"Port"}
           fullWidth
-          value={port}
           onChange={e => setPort(e.target.value)}
+          InputProps={{
+            value: port
+          }}
         />
         {!!coin && port !== getPort(coin) ? (
           <Typography variant={"caption"} style={{ marginTop: "4px" }}>
