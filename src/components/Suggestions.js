@@ -82,10 +82,12 @@ const styles = theme => ({
   },
 
   inputRoot: {
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    width: "100%"
   },
   inputInput: {
-    width: "auto"
+    width: "auto",
+    width: "100%"
   }
 });
 
@@ -108,9 +110,11 @@ function IntegrationDownshift(props) {
           {renderInput({
             fullWidth: true,
             classes,
+            label: "Coin",
+            type: "search",
             InputProps: getInputProps({
-              placeholder: "Coin",
-              onFocus: openMenu
+              onFocus: openMenu,
+              type: "search"
             })
           })}
           <div {...getMenuProps()}>
