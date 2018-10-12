@@ -32,7 +32,14 @@ class App extends Component {
             <br />
             <br />
 
-            <Paper style={{ padding: "20px" }}>Connection — ok.</Paper>
+            <Paper style={{ padding: "20px" }}>
+              <Typography paragraph>
+                You are using a trial version of this programm.
+              </Typography>
+              <Typography>
+                To send cool requests please consider upgrading.
+              </Typography>
+            </Paper>
           </Grid>
         </Grid>
       </MuiThemeProvider>
