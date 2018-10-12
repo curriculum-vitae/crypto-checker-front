@@ -18,6 +18,12 @@ const TextFieldEditable = flow(withState("query", "setQuery"))(
   )
 );
 
+const getPort = label =>
+  flow(
+    find(item => item.label === label),
+    item => item.port
+  )(DATA_ITEMS);
+
 const Form = flow(
   withState("ip", "setIP"),
   withState("port", "setPort"),
@@ -41,7 +47,7 @@ const Form = flow(
           value={port}
           onChange={e => setPort(e.target.value)}
         />
-        {!port && !!coin ? (
+        {!!coin && port !== getPort(coin) ? (
           <Typography variant={"caption"} style={{ marginTop: "4px" }}>
             Suggestion:
             <u
@@ -49,18 +55,9 @@ const Form = flow(
                 marginLeft: "4px",
                 cursor: "pointer"
               }}
-              onClick={() => {
-                const port = flow(
-                  find(item => item.label === coin),
-                  item => item.port
-                )(DATA_ITEMS);
-                setPort(port);
-              }}
+              onClick={() => setPort(getPort(coin))}
             >
-              {flow(
-                find(item => item.label === coin),
-                item => item.port
-              )(DATA_ITEMS)}
+              {getPort(coin)}
             </u>
           </Typography>
         ) : null}
