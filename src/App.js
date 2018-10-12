@@ -1,26 +1,75 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+import { Button, Grid, Paper, TextField, Typography } from "@material-ui/core";
+import React, { Component } from "react";
+
+import Suggestions from "./components/Suggestions";
+import { flow } from "lodash/fp";
+import { withState } from "recompose";
+
+const DATABASE = [
+  {
+    id: 1,
+    name: "Bit",
+    port: 3666
+  },
+  {
+    id: 2,
+    name: "Mit",
+    port: 3700
+  }
+];
+
+const TextFieldEditable = flow(withState("query", "setQuery"))(
+  ({ query, setQuery, ...props }) => (
+    <TextField
+      value={query}
+      onChange={e => setQuery(e.target.value)}
+      {...props}
+    />
+  )
+);
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Grid container justify={"center"}>
+        <Grid item xs={12} md={6}>
+          <br />
+          <br />
+          <br />
+          <br />
+          <Typography variant={"title"}>Crypto checker v 0.0.1</Typography>
+          <br />
+          <Paper style={{ padding: "20px" }}>
+            <Suggestions />
+
+            <Grid container spacing={16}>
+              <Grid item xs={9} sm={10}>
+                <TextFieldEditable label={"IP"} fullWidth />
+              </Grid>
+              <Grid item xs={3} sm={2}>
+                <TextFieldEditable label={"Port"} fullWidth />
+              </Grid>
+            </Grid>
+            <br />
+            <br />
+            <Button
+              color={"primary"}
+              variant={"contained"}
+              style={{ textAlign: "right" }}
+            >
+              Check
+            </Button>
+          </Paper>
+          <br />
+          <br />
+          <br />
+          <br />
+
+          <Paper style={{ padding: "20px" }}>Connection — ok.</Paper>
+        </Grid>
+      </Grid>
     );
   }
 }
