@@ -75,7 +75,7 @@ const styles = theme => ({
   },
   paper: {
     position: "absolute",
-    zIndex: 1,
+    zIndex: 10,
     marginTop: theme.spacing.unit,
     left: 0,
     right: 0
@@ -110,6 +110,7 @@ function IntegrationDownshift(props) {
             classes,
             label: "Coin",
             type: "search",
+            variant: "outlined",
             InputProps: getInputProps({
               onFocus: openMenu,
               type: "search"

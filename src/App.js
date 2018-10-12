@@ -1,12 +1,28 @@
 import "./App.css";
 
-import { Button, Grid, Paper, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  CssBaseline,
+  Grid,
+  MuiThemeProvider,
+  Paper,
+  TextField,
+  Typography
+} from "@material-ui/core";
 import React, { Component } from "react";
 import { find, flow } from "lodash/fp";
 
 import { DATA_ITEMS } from "./constants";
 import Suggestions from "./components/Suggestions";
+import blue from "@material-ui/core/colors/blue";
+import { createMuiTheme } from "@material-ui/core/styles";
 import { withState } from "recompose";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: blue
+  }
+});
 
 const TextFieldEditable = flow(withState("query", "setQuery"))(
   ({ query, setQuery, ...props }) => (
@@ -26,6 +42,8 @@ const getPort = label =>
 
 const Form = flow(
   withState("ip", "setIP"),
+  // TODO
+  // @material-ui/core forces to set initial state so animation works properly
   withState("port", "setPort", ""),
   withState("coin", "setCoin")
 )(({ ip, port, coin, setIP, setPort, setCoin, onSubmit }) => (
@@ -38,6 +56,7 @@ const Form = flow(
           autoFocus={false}
           label={"IP"}
           fullWidth
+          variant={"outlined"}
           onChange={e => setIP(e.target.value)}
         />
       </Grid>
@@ -45,6 +64,7 @@ const Form = flow(
         <TextFieldEditable
           label={"Port"}
           fullWidth
+          variant={"outlined"}
           onChange={e => setPort(e.target.value)}
           type={"number"}
           InputProps={{
@@ -78,32 +98,51 @@ const Form = flow(
   </>
 ));
 
+const Wallpaper = () => (
+  <div
+    style={{
+      backgroundImage: `url("./images/bg.jpg")`,
+      backgroundRepeat: "no-repeat",
+      backgroundAttachment: "fixed",
+      backgroundPosition: "center",
+      height: "400px"
+    }}
+  />
+);
+
 class App extends Component {
   render() {
     return (
-      <Grid container justify={"center"}>
-        <Grid item xs={12} md={6}>
-          <br />
-          <br />
-          <br />
-          <br />
-          <Typography variant={"title"}>Crypto checker v 0.0.1</Typography>
-          <br />
-          <Paper style={{ padding: "20px" }}>
-            <Form
-              onSubmit={data => {
-                window.alert(JSON.stringify(data));
-              }}
-            />
-          </Paper>
-          <br />
-          <br />
-          <br />
-          <br />
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <Wallpaper />
+        <Grid container justify={"center"} style={{ padding: "12px" }}>
+          <Grid item xs={12} md={6}>
+            <br />
+            <br />
+            <br />
+            <br />
 
-          <Paper style={{ padding: "20px" }}>Connection — ok.</Paper>
+            <br />
+            <Paper style={{ padding: "20px", marginTop: "-200px" }}>
+              <Typography variant={"h4"} align={"center"} gutterBottom>
+                Crypto Checker v0.0.1
+              </Typography>
+              <Form
+                onSubmit={data => {
+                  window.alert(JSON.stringify(data));
+                }}
+              />
+            </Paper>
+            <br />
+            <br />
+            <br />
+            <br />
+
+            <Paper style={{ padding: "20px" }}>Connection — ok.</Paper>
+          </Grid>
         </Grid>
-      </Grid>
+      </MuiThemeProvider>
     );
   }
 }
