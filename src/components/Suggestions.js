@@ -90,10 +90,10 @@ const styles = theme => ({
 });
 
 function IntegrationDownshift(props) {
-  const { classes } = props;
+  const { classes, onSelect } = props;
 
   return (
-    <Downshift id="downshift-simple">
+    <Downshift id="downshift-simple" onSelect={onSelect}>
       {({
         getInputProps,
         getItemProps,

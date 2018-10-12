@@ -2,9 +2,10 @@ import "./App.css";
 
 import { Button, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import React, { Component } from "react";
+import { find, flow } from "lodash/fp";
 
+import { DATA_ITEMS } from "./constants";
 import Suggestions from "./components/Suggestions";
-import { flow } from "lodash/fp";
 import { withState } from "recompose";
 
 const TextFieldEditable = flow(withState("query", "setQuery"))(
@@ -23,7 +24,7 @@ const Form = flow(
   withState("coin", "setCoin")
 )(({ ip, port, coin, setIP, setPort, setCoin }) => (
   <>
-    <Suggestions />
+    <Suggestions onSelect={item => setCoin(item)} />
     <br />
     <Grid container spacing={16}>
       <Grid item xs={9} sm={10}>
@@ -37,8 +38,32 @@ const Form = flow(
         <TextFieldEditable
           label={"Port"}
           fullWidth
+          value={port}
           onChange={e => setPort(e.target.value)}
         />
+        {!port && !!coin ? (
+          <Typography variant={"caption"} style={{ marginTop: "4px" }}>
+            Suggestion:
+            <u
+              style={{
+                marginLeft: "4px",
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                const port = flow(
+                  find(item => item.label === coin),
+                  item => item.port
+                )(DATA_ITEMS);
+                setPort(port);
+              }}
+            >
+              {flow(
+                find(item => item.label === coin),
+                item => item.port
+              )(DATA_ITEMS)}
+            </u>
+          </Typography>
+        ) : null}
       </Grid>
     </Grid>
     <br />
