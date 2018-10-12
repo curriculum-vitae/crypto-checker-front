@@ -7,19 +7,6 @@ import Suggestions from "./components/Suggestions";
 import { flow } from "lodash/fp";
 import { withState } from "recompose";
 
-const DATABASE = [
-  {
-    id: 1,
-    name: "Bit",
-    port: 3666
-  },
-  {
-    id: 2,
-    name: "Mit",
-    port: 3700
-  }
-];
-
 const TextFieldEditable = flow(withState("query", "setQuery"))(
   ({ query, setQuery, ...props }) => (
     <TextField
