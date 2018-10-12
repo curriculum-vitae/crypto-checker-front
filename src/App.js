@@ -46,6 +46,7 @@ const Form = flow(
           label={"Port"}
           fullWidth
           onChange={e => setPort(e.target.value)}
+          type={"number"}
           InputProps={{
             value: port
           }}
@@ -67,12 +68,7 @@ const Form = flow(
       </Grid>
     </Grid>
     <br />
-    <br />
-    <Button
-      color={"primary"}
-      variant={"contained"}
-      style={{ textAlign: "right" }}
-    >
+    <Button color={"primary"} variant={"contained"}>
       Check
     </Button>
   </>
