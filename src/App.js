@@ -26,9 +26,9 @@ const getPort = label =>
 
 const Form = flow(
   withState("ip", "setIP"),
-  withState("port", "setPort", "Test"),
+  withState("port", "setPort", ""),
   withState("coin", "setCoin")
-)(({ ip, port, coin, setIP, setPort, setCoin }) => (
+)(({ ip, port, coin, setIP, setPort, setCoin, onSubmit }) => (
   <>
     <Suggestions onSelect={item => setCoin(item)} />
     <br />
@@ -68,7 +68,11 @@ const Form = flow(
       </Grid>
     </Grid>
     <br />
-    <Button color={"primary"} variant={"contained"}>
+    <Button
+      color={"primary"}
+      variant={"contained"}
+      onClick={() => onSubmit({ ip, port, coin })}
+    >
       Check
     </Button>
   </>
@@ -86,7 +90,11 @@ class App extends Component {
           <Typography variant={"title"}>Crypto checker v 0.0.1</Typography>
           <br />
           <Paper style={{ padding: "20px" }}>
-            <Form />
+            <Form
+              onSubmit={data => {
+                window.alert(JSON.stringify(data));
+              }}
+            />
           </Paper>
           <br />
           <br />
