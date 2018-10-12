@@ -3,9 +3,8 @@ import { MenuItem, Paper, TextField } from "@material-ui/core";
 import Downshift from "downshift";
 import React from "react";
 import deburr from "lodash/deburr";
+import { DATA_ITEMS as suggestions } from "../constants";
 import { withStyles } from "@material-ui/core/styles";
-
-const suggestions = [{ label: "Bit" }, { label: "Mit" }];
 
 function renderInput(inputProps) {
   const { InputProps, classes, ref, ...other } = inputProps;
