@@ -8,11 +8,11 @@ import { getPort } from "helpers.js";
 import { withState } from "recompose";
 
 export const SubmitForm = flow(
-  withState("ip", "setIP"),
+  withState("ip", "setIP", "127.0.0.1"),
   // TODO
   // @material-ui/core forces to set initial state so animation works properly
-  withState("port", "setPort", ""),
-  withState("coin", "setCoin")
+  withState("port", "setPort", 3000),
+  withState("coin", "setCoin", "btc")
 )(({ ip, port, coin, setIP, setPort, setCoin, onSubmit }) => (
   <>
     <Suggestions onSelect={item => setCoin(item)} />
@@ -39,7 +39,7 @@ export const SubmitForm = flow(
           }}
         />
         {!!coin && port !== getPort(coin) ? (
-          <Typography variant={"caption"} style={{ marginTop: "4px" }}>
+          <Typography variant={"body2"} style={{ marginTop: "4px" }}>
             Suggestion:
             <u
               style={{
