@@ -20,6 +20,7 @@ import { find, flow, map } from "lodash/fp";
 
 import React from "react";
 import { SubmitForm } from "features/SubmitForm";
+import { Unit } from "components/Unit";
 import { convertFormToURL } from "helpers.js";
 import gql from "graphql-tag";
 
@@ -36,6 +37,7 @@ const UNITS_SUBSCRIPTION = gql`
       type
       title
       description
+      details
     }
   }
 `;
@@ -48,6 +50,7 @@ const ADD_URL = gql`
       type
       title
       description
+      details
     }
   }
 `;
@@ -114,25 +117,16 @@ export const SubmitFormWithUnits = compose(
           }}
         />
 
-        <Paper>
-          <List>
-            {flow(
-              map(unit => (
-                <ListItem key={unit.id} dense>
-                  <ListItemIcon>
-                    <Icon>{MAP_OF_TYPES_TO_ICONS[unit.type]}</Icon>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={unit.title}
-                    secondary={unit.description}
-                  />
-                </ListItem>
-              ))
-            )(units)}
-          </List>
+        {flow(
+          map(unit => (
+            <React.Fragment key={unit.id}>
+              <Unit unit={unit} />
+              <br />
+            </React.Fragment>
+          ))
+        )(units)}
 
-          {isUnitsFullyLoaded(units) ? null : <LinearProgress />}
-        </Paper>
+        {isUnitsFullyLoaded(units) ? null : <LinearProgress />}
       </div>
     ) : null}
   </>
