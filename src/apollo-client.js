@@ -7,12 +7,18 @@ import { split } from "apollo-link";
 
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/graphql"
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "https://crypto-checker-back-acrthhiaxv.now.sh/graphql"
+      : "http://localhost:4000/graphql"
 });
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/graphql`,
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "ws://crypto-checker-back-acrthhiaxv.now.sh/graphql"
+      : `ws://localhost:4000/graphql`,
   options: {
     reconnect: true
   }
