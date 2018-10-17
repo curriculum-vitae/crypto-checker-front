@@ -9,7 +9,7 @@ import { split } from "apollo-link";
 const httpLink = new HttpLink({
   uri:
     process.env.NODE_ENV === "production"
-      ? "https://crypto-checker-back-acrthhiaxv.now.sh/graphql"
+      ? "https://crypto-checker-back-smazhsvniv.now.sh/graphql"
       : "http://localhost:4000/graphql"
 });
 
@@ -17,7 +17,7 @@ const httpLink = new HttpLink({
 const wsLink = new WebSocketLink({
   uri:
     process.env.NODE_ENV === "production"
-      ? "wss://crypto-checker-back-acrthhiaxv.now.sh/graphql"
+      ? "wss://crypto-checker-back-smazhsvniv.now.sh/graphql"
       : `ws://localhost:4000/graphql`,
   options: {
     reconnect: true
