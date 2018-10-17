@@ -1,18 +1,19 @@
 import { Button, Grid, Typography } from "@material-ui/core";
+import { compose, flow } from "lodash/fp";
+import { setDisplayName, withState } from "recompose";
 
 import React from "react";
 import Suggestions from "components/Suggestions";
 import { TextFieldEditable } from "components/TextFieldEditable";
-import { flow } from "lodash/fp";
 import { getPort } from "helpers.js";
-import { withState } from "recompose";
 
-export const SubmitForm = flow(
+export const SubmitForm = compose(
   withState("ip", "setIP", "127.0.0.1"),
   // TODO
   // @material-ui/core forces to set initial state so animation works properly
   withState("port", "setPort", 3000),
-  withState("coin", "setCoin", "btc")
+  withState("coin", "setCoin", "btc"),
+  setDisplayName("SubmitForm")
 )(({ ip, port, coin, setIP, setPort, setCoin, onSubmit }) => (
   <>
     <Suggestions onSelect={item => setCoin(item)} />

@@ -1,10 +1,20 @@
-import { MenuItem, Paper, TextField } from "@material-ui/core";
+import { Menu, MenuItem, Paper, TextField } from "@material-ui/core";
 
+import COINS from "coins.json";
 import Downshift from "downshift";
 import React from "react";
 import deburr from "lodash/deburr";
-import { DATA_ITEMS as suggestions } from "../constants";
 import { withStyles } from "@material-ui/core/styles";
+
+const suggestions = COINS.map(coin => ({
+  key: coin[0],
+  name: coin[1],
+  port: coin[2]
+}));
+
+const getSuggestionLabel = suggestion => {
+  return `${suggestion.key} / ${suggestion.name}`;
+};
 
 function renderInput(inputProps) {
   const { InputProps, classes, ref, ...other } = inputProps;
@@ -32,19 +42,19 @@ function renderSuggestion({
   selectedItem
 }) {
   const isHighlighted = highlightedIndex === index;
-  const isSelected = (selectedItem || "").indexOf(suggestion.label) > -1;
+  const isSelected = (selectedItem || "").indexOf(suggestion.name) > -1;
 
   return (
     <MenuItem
       {...itemProps}
-      key={suggestion.label}
+      key={suggestion.key}
       selected={isHighlighted}
       component="div"
       style={{
         fontWeight: isSelected ? 500 : 400
       }}
     >
-      {suggestion.label}
+      {getSuggestionLabel(suggestion)}
     </MenuItem>
   );
 }
@@ -59,7 +69,7 @@ function getSuggestions(value) {
     : suggestions.filter(suggestion => {
         const keep =
           count < 5 &&
-          suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+          suggestion.name.slice(0, inputLength).toLowerCase() === inputValue;
 
         if (keep) {
           count += 1;
@@ -118,12 +128,21 @@ function IntegrationDownshift(props) {
           })}
           <div {...getMenuProps()}>
             {isOpen ? (
-              <Paper className={classes.paper} square>
+              <Paper
+                style={{
+                  maxHeight: "300px",
+                  overflowY: "scroll"
+                }}
+                className={classes.paper}
+                square
+              >
                 {getSuggestions(inputValue).map((suggestion, index) =>
                   renderSuggestion({
                     suggestion,
                     index,
-                    itemProps: getItemProps({ item: suggestion.label }),
+                    itemProps: getItemProps({
+                      item: getSuggestionLabel(suggestion)
+                    }),
                     highlightedIndex,
                     selectedItem
                   })
