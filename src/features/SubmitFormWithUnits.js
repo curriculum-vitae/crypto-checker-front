@@ -23,11 +23,17 @@ import { SubmitForm } from "features/SubmitForm";
 import { convertFormToURL } from "helpers.js";
 import gql from "graphql-tag";
 
+const MAP_OF_TYPES_TO_ICONS = {
+  info: "info",
+  error: "warning"
+};
+
 const UNITS_SUBSCRIPTION = gql`
   subscription onUnitAdded($url: String!) {
     unitAdded(url: $url) {
       id
       status
+      type
       title
       description
     }
@@ -39,6 +45,7 @@ const ADD_URL = gql`
     urlAdd(url: $url) {
       id
       status
+      type
       title
       description
     }
@@ -113,7 +120,7 @@ export const SubmitFormWithUnits = compose(
               map(unit => (
                 <ListItem key={unit.id} dense>
                   <ListItemIcon>
-                    <Icon>info</Icon>
+                    <Icon>{MAP_OF_TYPES_TO_ICONS[unit.type]}</Icon>
                   </ListItemIcon>
                   <ListItemText
                     primary={unit.title}
