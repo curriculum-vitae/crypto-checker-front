@@ -1,6 +1,22 @@
+import {
+  Icon,
+  LinearProgress,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  Typography
+} from "@material-ui/core";
 import { Mutation, Subscription, withApollo } from "react-apollo";
-import { Paper, Typography } from "@material-ui/core";
-import { compose, withHandlers, withState } from "recompose";
+import {
+  compose,
+  setDisplayName,
+  withHandlers,
+  withProps,
+  withState
+} from "recompose";
+import { find, flow, map } from "lodash/fp";
 
 import React from "react";
 import { SubmitForm } from "features/SubmitForm";
@@ -29,9 +45,16 @@ const ADD_URL = gql`
   }
 `;
 
-const SubscriptionForNewUnits = ({ variables }) => (
-  <Subscription subscription={UNITS_SUBSCRIPTION} variables={variables}>
+const isUnitsFullyLoaded = find(unit => unit.status === "resolved");
+
+const SubscriptionForNewUnits = ({ variables, onSubscriptionData }) => (
+  <Subscription
+    subscription={UNITS_SUBSCRIPTION}
+    variables={variables}
+    onSubscriptionData={onSubscriptionData}
+  >
     {({ loading, error, data }) => {
+      return null;
       if (loading) return <p>Loading...</p>;
       if (error) return <p>{error.message}</p>;
       return JSON.stringify(data);
@@ -40,13 +63,11 @@ const SubscriptionForNewUnits = ({ variables }) => (
 );
 
 export const SubmitFormWithUnits = compose(
-  withState("forms", "setForms", []),
+  withState("form", "setForm"),
   withState("units", "setUnits", []),
-  withHandlers({
-    addToForms: ({ setForms, forms }) => form => setForms([...forms, form])
-  }),
-  withApollo
-)(({ addToForms, forms, units }) => (
+  withApollo,
+  setDisplayName("SubmitFormWithUnits")
+)(({ setForm, form, units, setUnits }) => (
   <>
     <br />
     <br />
@@ -55,17 +76,24 @@ export const SubmitFormWithUnits = compose(
         {addURL => (
           <SubmitForm
             onSubmit={form => {
-              addToForms(form);
               addURL({ variables: { url: convertFormToURL(form) } });
+              setUnits([]);
+              setForm(form);
             }}
           />
         )}
       </Mutation>
     </Paper>
+
     <br />
     <br />
-    {forms.map(form => (
-      <React.Fragment key={convertFormToURL(form)}>
+    {!!form ? (
+      <div
+        style={{
+          minHeight: "400px"
+        }}
+        key={convertFormToURL(form)}
+      >
         <Typography variant={"caption"}>
           News about <b>{convertFormToURL(form)}</b>
         </Typography>
@@ -73,13 +101,32 @@ export const SubmitFormWithUnits = compose(
           variables={{
             url: convertFormToURL(form)
           }}
+          onSubscriptionData={data => {
+            const unit = data.subscriptionData.data.unitAdded;
+            setUnits([...units, unit]);
+          }}
         />
 
-        <Paper style={{ padding: "20px", marginBottom: "20px" }}>
-          Count of units
-          {units.length}
+        <Paper>
+          <List>
+            {flow(
+              map(unit => (
+                <ListItem key={unit.id} dense>
+                  <ListItemIcon>
+                    <Icon>info</Icon>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={unit.title}
+                    secondary={unit.description}
+                  />
+                </ListItem>
+              ))
+            )(units)}
+          </List>
+
+          {isUnitsFullyLoaded(units) ? null : <LinearProgress />}
         </Paper>
-      </React.Fragment>
-    ))}
+      </div>
+    ) : null}
   </>
 ));
