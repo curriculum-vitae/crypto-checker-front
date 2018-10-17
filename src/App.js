@@ -23,13 +23,9 @@ class App extends Component {
           <Wallpaper />
           <Grid container justify={"center"} style={{ padding: "12px" }}>
             <Grid item xs={12} sm={8} md={6} lg={6} xl={4}>
-              <Paper style={{ padding: "20px", marginTop: "-80px" }}>
-                <Typography variant={"h4"} align={"center"} gutterBottom>
-                  Crypto Checker v0.0.1
-                </Typography>
-              </Paper>
-              <SubmitFormWithUnits />
-
+              <div style={{ marginTop: "-80px" }}>
+                <SubmitFormWithUnits />
+              </div>
               <br />
               <br />
               <br />

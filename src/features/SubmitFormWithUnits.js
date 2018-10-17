@@ -58,9 +58,10 @@ export const SubmitFormWithUnits = compose(
   setDisplayName("SubmitFormWithUnits")
 )(({ setForm, form, units, setUnits }) => (
   <>
-    <br />
-    <br />
     <Paper style={{ padding: "20px" }}>
+      <Typography variant={"h4"} align={"center"} gutterBottom>
+        Crypto Checker v0.2.0
+      </Typography>
       <Mutation mutation={ADD_URL}>
         {addURL => (
           <SubmitForm
@@ -73,6 +74,7 @@ export const SubmitFormWithUnits = compose(
         )}
       </Mutation>
     </Paper>
+
     <br />
     <br />
     <div
@@ -81,8 +83,8 @@ export const SubmitFormWithUnits = compose(
       }}
     >
       {!!form ? (
-        <div key={convertFormToURL(form)}>
-          <Typography variant={"caption"}>
+        <React.Fragment key={convertFormToURL(form)}>
+          <Typography variant={"subtitle1"} gutterBottom align={"center"}>
             News about <b>{convertFormToURL(form)}</b>
           </Typography>
           <SubscriptionForNewUnits
@@ -104,8 +106,16 @@ export const SubmitFormWithUnits = compose(
             ))
           )(units)}
 
-          {isUnitsFullyLoaded(units) ? null : <LinearProgress />}
-        </div>
+          {isUnitsFullyLoaded(units) ? (
+            <>
+              <Typography variant={"subtitle1"} gutterBottom align={"center"}>
+                All checks are done!
+              </Typography>
+            </>
+          ) : (
+            <LinearProgress />
+          )}
+        </React.Fragment>
       ) : null}
     </div>
   </>
