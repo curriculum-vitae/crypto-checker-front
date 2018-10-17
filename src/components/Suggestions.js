@@ -4,6 +4,7 @@ import COINS from "coins.json";
 import Downshift from "downshift";
 import React from "react";
 import deburr from "lodash/deburr";
+import { getSuggestionLabel } from "helpers.js";
 import { withStyles } from "@material-ui/core/styles";
 
 const suggestions = COINS.map(coin => ({
@@ -11,10 +12,6 @@ const suggestions = COINS.map(coin => ({
   name: coin[1],
   port: coin[2]
 }));
-
-const getSuggestionLabel = suggestion => {
-  return `${suggestion.key} / ${suggestion.name}`;
-};
 
 function renderInput(inputProps) {
   const { InputProps, classes, ref, ...other } = inputProps;
