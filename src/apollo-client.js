@@ -17,7 +17,7 @@ const httpLink = new HttpLink({
 const wsLink = new WebSocketLink({
   uri:
     process.env.NODE_ENV === "production"
-      ? "ws://crypto-checker-back-acrthhiaxv.now.sh/graphql"
+      ? "wss://crypto-checker-back-acrthhiaxv.now.sh/graphql"
       : `ws://localhost:4000/graphql`,
   options: {
     reconnect: true
