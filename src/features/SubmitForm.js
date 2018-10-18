@@ -1,5 +1,5 @@
 import { Button, Grid, Typography } from "@material-ui/core";
-import { getPort, isValidIP } from "helpers.js";
+import { getPort, isValidIP, isValidPort } from "helpers.js";
 import { setDisplayName, withState } from "recompose";
 
 import React from "react";
@@ -39,24 +39,31 @@ export const SubmitForm = compose(
           variant={"outlined"}
           onChange={e => setPort(e.target.value)}
           type={"number"}
+          error={!!port & !isValidPort(port)}
+          helperText={
+            <>
+              {!!port && !isValidPort(port) ? (
+                "Port range is 1 - 65535"
+              ) : !!coin && port !== getPort(coin) ? (
+                <Typography variant={"caption"} gutterBottom>
+                  Suggestion:
+                  <u
+                    style={{
+                      marginLeft: "4px",
+                      cursor: "pointer"
+                    }}
+                    onClick={() => setPort(getPort(coin))}
+                  >
+                    {getPort(coin)}
+                  </u>
+                </Typography>
+              ) : null}
+            </>
+          }
           InputProps={{
             value: port
           }}
         />
-        {!!coin && port !== getPort(coin) ? (
-          <Typography variant={"caption"} gutterBottom>
-            Suggestion:
-            <u
-              style={{
-                marginLeft: "4px",
-                cursor: "pointer"
-              }}
-              onClick={() => setPort(getPort(coin))}
-            >
-              {getPort(coin)}
-            </u>
-          </Typography>
-        ) : null}
       </Grid>
     </Grid>
     <br />
@@ -64,7 +71,7 @@ export const SubmitForm = compose(
       color={"primary"}
       variant={"contained"}
       onClick={() => onSubmit({ ip, port, coin })}
-      disabled={!port || !coin || !ip || !isValidIP(ip)}
+      disabled={!port || !coin || !ip || !isValidIP(ip) || !isValidPort(port)}
     >
       Check
     </Button>

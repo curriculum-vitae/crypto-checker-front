@@ -23,6 +23,8 @@ export const isValidIP = ip => {
   return regExp.test(ip);
 };
 
+export const isValidPort = port => port >= 1 && port <= 65535;
+
 export const isUnitsFullyLoaded = find(unit => unit.status === "resolved");
 
 export const getSuggestionLabel = suggestion => {
