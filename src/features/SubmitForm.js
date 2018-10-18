@@ -42,7 +42,14 @@ export const SubmitForm = compose(
           />
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Suggestions onSelect={item => setCoin(item)} />
+          <Suggestions
+            onSelect={coin => {
+              setCoin(coin);
+              if (!isPortIsManuallyEdited && coin && !!getPort(coin)) {
+                setPort(getPort(coin));
+              }
+            }}
+          />
         </Grid>
         <Grid item xs={4} sm={3}>
           <TextFieldEditable
@@ -78,10 +85,7 @@ export const SubmitForm = compose(
               </>
             }
             InputProps={{
-              value:
-                !isPortIsManuallyEdited && coin && !!getPort(coin)
-                  ? getPort(coin)
-                  : port
+              value: port
             }}
           />
         </Grid>
