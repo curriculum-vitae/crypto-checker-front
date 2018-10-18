@@ -1,7 +1,7 @@
 import { LinearProgress, Paper, Typography } from "@material-ui/core";
 import { Mutation, Subscription, withApollo } from "react-apollo";
 import { compose, setDisplayName, withState } from "recompose";
-import { find, flow, map } from "lodash/fp";
+import { flow, map } from "lodash/fp";
 
 import React from "react";
 import { SubmitForm } from "features/SubmitForm";
@@ -9,11 +9,6 @@ import { Unit } from "components/Unit";
 import { convertFormToURL } from "helpers.js";
 import gql from "graphql-tag";
 import { isUnitsFullyLoaded } from "helpers.js";
-
-const MAP_OF_TYPES_TO_ICONS = {
-  info: "info",
-  error: "warning"
-};
 
 const UNITS_SUBSCRIPTION = gql`
   subscription onUnitAdded($url: String!) {
