@@ -3,13 +3,20 @@ import { find, flow } from "lodash/fp";
 import COINS from "coins.json";
 
 export const getPort = label => {
-  const key = label.split("#")[0];
-  const name = label.split("#")[1];
+  try {
+    const match = label.match(/([\s\S]+) \(([\s\S]+)\)/);
 
-  return flow(
-    find(item => item[0] === key && item[1] === name),
-    item => (!!item ? item[2] : null)
-  )(COINS);
+    const key = match[2];
+    const name = match[1];
+
+    return flow(
+      find(item => item[0] === key && item[1] === name),
+      item => (!!item ? item[2] : null)
+    )(COINS);
+  } catch (e) {
+    console.error("getPort exploded");
+    return null;
+  }
 };
 
 export const convertFormToURL = form =>

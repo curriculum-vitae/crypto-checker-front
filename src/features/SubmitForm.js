@@ -44,7 +44,7 @@ export const SubmitForm = compose(
             <>
               {!!port && !isValidPort(port) ? (
                 "Port range is 1 - 65535"
-              ) : !!coin && port !== getPort(coin) ? (
+              ) : !!coin && getPort(coin) && port !== getPort(coin) ? (
                 <Typography variant={"caption"} gutterBottom>
                   Suggestion:
                   <u
