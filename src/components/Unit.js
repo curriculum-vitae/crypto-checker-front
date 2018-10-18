@@ -11,7 +11,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { Mutation, Subscription, withApollo } from "react-apollo";
-import { blue, orange } from "@material-ui/core/colors";
+import { blue, green, orange, red } from "@material-ui/core/colors";
 import { compose, find, flow, map } from "lodash/fp";
 
 import React from "react";
@@ -19,12 +19,16 @@ import { withState } from "recompose";
 
 const MAP_OF_TYPES_TO_ICONS = {
   info: "info",
-  error: "warning"
+  warning: "warning",
+  okay: "thumb_up",
+  error: "cancel"
 };
 
 const MAP_OF_TYPES_TO_PALETTES = {
   info: blue,
-  error: orange
+  warning: orange,
+  okay: green,
+  error: red
 };
 
 export const Unit = compose(withState("isInDetail", "setIsInDetail", false))(
