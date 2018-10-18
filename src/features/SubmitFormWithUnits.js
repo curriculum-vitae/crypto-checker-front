@@ -10,6 +10,11 @@ import { convertFormToURL } from "helpers.js";
 import gql from "graphql-tag";
 import { isUnitsFullyLoaded } from "helpers.js";
 
+const MAP_OF_TYPES_TO_ICONS = {
+  info: "info",
+  error: "warning"
+};
+
 const UNITS_SUBSCRIPTION = gql`
   subscription onUnitAdded($url: String!) {
     unitAdded(url: $url) {
