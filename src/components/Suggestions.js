@@ -66,7 +66,8 @@ function getSuggestions(value) {
     : suggestions.filter(suggestion => {
         const keep =
           count < 5 &&
-          suggestion.name.slice(0, inputLength).toLowerCase() === inputValue;
+          (suggestion.name.slice(0, inputLength).toLowerCase() === inputValue ||
+            suggestion.key.slice(0, inputLength).toLowerCase() === inputValue);
 
         if (keep) {
           count += 1;
