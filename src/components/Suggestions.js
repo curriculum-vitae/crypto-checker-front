@@ -1,10 +1,17 @@
-import { Menu, MenuItem, Paper, TextField } from "@material-ui/core";
+import { Chip, Menu, MenuItem, Paper, TextField } from "@material-ui/core";
+import { compose, deburr, flow } from "lodash/fp";
+import {
+  setDisplayName,
+  withHandlers,
+  withState,
+  withStateHandlers
+} from "recompose";
 
 import COINS from "coins.json";
 import Downshift from "downshift";
 import React from "react";
-import deburr from "lodash/deburr";
 import { getSuggestionLabel } from "helpers.js";
+import keycode from "keycode";
 import { withStyles } from "@material-ui/core/styles";
 
 const suggestions = COINS.map(coin => ({
@@ -13,8 +20,8 @@ const suggestions = COINS.map(coin => ({
   port: coin[2]
 }));
 
-function renderInput(inputProps) {
-  const { InputProps, classes, ref, ...other } = inputProps;
+function renderInput(props) {
+  const { InputProps, classes, ref, ...other } = props;
 
   return (
     <TextField
@@ -97,61 +104,102 @@ const styles = theme => ({
   }
 });
 
-function IntegrationDownshift(props) {
-  const { classes, onSelect } = props;
+const Suggestions = ({
+  classes,
+  onSelect,
+  onChange,
+  inputValue,
+  setInputValue,
+  selectedItem,
+  setSelectedItem
+}) => (
+  <Downshift
+    id="coins-picker"
+    onSelect={onSelect}
+    inputValue={inputValue}
+    selectedItem={selectedItem}
+    onChange={onChange}
+  >
+    {({
+      getInputProps,
+      getItemProps,
+      getMenuProps,
+      highlightedIndex,
 
-  return (
-    <Downshift id="downshift-simple" onSelect={onSelect}>
-      {({
-        getInputProps,
-        getItemProps,
-        getMenuProps,
-        highlightedIndex,
-        inputValue,
-        isOpen,
-        selectedItem,
-        openMenu
-      }) => (
-        <div className={classes.container}>
-          {renderInput({
-            fullWidth: true,
-            classes,
-            label: "Coin",
-            type: "search",
-            variant: "outlined",
-            InputProps: getInputProps({
-              onFocus: openMenu,
-              type: "search"
-            })
-          })}
-          <div {...getMenuProps()}>
-            {isOpen ? (
-              <Paper
-                style={{
-                  maxHeight: "300px",
-                  overflowY: "scroll"
+      isOpen,
+      inputValue: inputValue2,
+      selectedItem: selectedItem2,
+      openMenu
+    }) => (
+      <div className={classes.container}>
+        {renderInput({
+          fullWidth: true,
+          classes,
+          label: "Coin",
+          variant: "outlined",
+          InputProps: getInputProps({
+            startAdornment: selectedItem ? (
+              <Chip
+                key={selectedItem}
+                tabIndex={-1}
+                label={selectedItem}
+                className={classes.chip}
+                onDelete={() => {
+                  setSelectedItem(null);
+                  openMenu();
                 }}
-                className={classes.paper}
-                square
-              >
-                {getSuggestions(inputValue).map((suggestion, index) =>
-                  renderSuggestion({
-                    suggestion,
-                    index,
-                    itemProps: getItemProps({
-                      item: getSuggestionLabel(suggestion)
-                    }),
-                    highlightedIndex,
-                    selectedItem
-                  })
-                )}
-              </Paper>
-            ) : null}
-          </div>
+              />
+            ) : (
+              undefined
+            ),
+            onFocus: openMenu,
+            type: "search",
+            onChange: e => setInputValue(e.target.value),
+            disabled: !!selectedItem
+          }),
+          InputLabelProps: {
+            shrink: !!selectedItem ? true : undefined
+          },
+          placeholder: !!selectedItem ? null : "Pick a coin"
+        })}
+        <div {...getMenuProps()}>
+          {isOpen ? (
+            <Paper
+              style={{
+                maxHeight: "300px",
+                overflowY: "scroll"
+              }}
+              className={classes.paper}
+              square
+            >
+              {getSuggestions(inputValue).map((suggestion, index) =>
+                renderSuggestion({
+                  suggestion,
+                  index,
+                  itemProps: getItemProps({
+                    item: getSuggestionLabel(suggestion)
+                  }),
+                  highlightedIndex,
+                  selectedItem
+                })
+              )}
+            </Paper>
+          ) : null}
         </div>
-      )}
-    </Downshift>
-  );
-}
+      </div>
+    )}
+  </Downshift>
+);
 
-export default withStyles(styles)(IntegrationDownshift);
+export default compose(
+  withStyles(styles),
+  withState("inputValue", "setInputValue", ""),
+  withState("selectedItem", "setSelectedItem", null),
+  withHandlers({
+    onChange: ({ setInputValue, setSelectedItem, selectedItem }) => item => {
+      setInputValue("");
+      setSelectedItem(item);
+    }
+  }),
+  setDisplayName("Suggestions")
+)(Suggestions);
