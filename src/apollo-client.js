@@ -9,7 +9,7 @@ import { split } from "apollo-link";
 const httpLink = new HttpLink({
   uri:
     process.env.NODE_ENV === "production"
-      ? "https://crypto-checker-back-smazhsvniv.now.sh/graphql"
+      ? "https://crypto-checker-back.now.sh/graphql"
       : "http://localhost:4000/graphql"
 });
 
