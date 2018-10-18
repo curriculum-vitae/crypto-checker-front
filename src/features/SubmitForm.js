@@ -25,7 +25,7 @@ export const SubmitForm = compose(
           fullWidth
           variant={"outlined"}
           onChange={e => setIP(e.target.value)}
-          error={!!ip & !isValidIP(ip)}
+          error={!!ip && !isValidIP(ip)}
           helperText={!!ip && !isValidIP(ip) ? "IP is not valid" : undefined}
         />
       </Grid>
@@ -39,7 +39,7 @@ export const SubmitForm = compose(
           variant={"outlined"}
           onChange={e => setPort(e.target.value)}
           type={"number"}
-          error={!!port & !isValidPort(port)}
+          error={!!port && !isValidPort(port)}
           helperText={
             <>
               {!!port && !isValidPort(port) ? (
