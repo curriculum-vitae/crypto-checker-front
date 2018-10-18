@@ -28,5 +28,5 @@ export const isValidPort = port => port >= 1 && port <= 65535;
 export const isUnitsFullyLoaded = find(unit => unit.status === "resolved");
 
 export const getSuggestionLabel = suggestion => {
-  return `${suggestion.key}#${suggestion.name}`;
+  return `${suggestion.name} (${suggestion.key})`;
 };
