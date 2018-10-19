@@ -7,6 +7,7 @@ import { green, orange, red } from "@material-ui/core/colors";
 
 import { Detector } from "react-detect-offline";
 import React from "react";
+import ReportConnectionWS from "features/ReportConnectionWS";
 import { SubmitForm } from "features/SubmitForm";
 import { Unit } from "components/Unit";
 import { blue } from "@material-ui/core/colors";
@@ -105,6 +106,7 @@ export const SubmitFormWithUnits = compose(
           )
         }
       />
+      <ReportConnectionWS />
       <div style={{ padding: "20px" }}>
         <Typography variant={"h4"} align={"center"} gutterBottom>
           Crypto Checker v0.2.0
