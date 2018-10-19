@@ -61,6 +61,8 @@ export const SubmitForm = compose(
               const value = e.target.value;
               if (parseInt(value, 10) <= 0) return;
               setPort(value);
+            }}
+            onKeyDown={e => {
               setIsPortIsManuallyEdited(true);
             }}
             type={"number"}
@@ -78,16 +80,14 @@ export const SubmitForm = compose(
                 getPort(coin) &&
                 parseInt(port, 10) !== parseInt(getPort(coin), 10) ? (
                   <Typography variant={"caption"} gutterBottom>
-                    Suggestion:
-                    <u
+                    <span
                       style={{
-                        marginLeft: "4px",
                         cursor: "pointer"
                       }}
                       onClick={() => setPort(getPort(coin))}
                     >
-                      {getPort(coin)}
-                    </u>
+                      Reset to default ({getPort(coin)})
+                    </span>
                   </Typography>
                 ) : null}
               </>
