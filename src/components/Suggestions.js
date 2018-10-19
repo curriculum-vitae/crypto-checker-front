@@ -1,16 +1,11 @@
-import { Chip, Menu, MenuItem, Paper, TextField } from "@material-ui/core";
-import { compose, deburr, flow } from "lodash/fp";
-import {
-  setDisplayName,
-  withHandlers,
-  withState,
-  withStateHandlers
-} from "recompose";
+import { Avatar, Chip, MenuItem, Paper, TextField } from "@material-ui/core";
+import { compose, deburr } from "lodash/fp";
+import { getLabelKey, getSuggestionLabel } from "helpers.js";
+import { setDisplayName, withHandlers, withState } from "recompose";
 
 import COINS from "coins.json";
 import Downshift from "downshift";
 import React from "react";
-import { getSuggestionLabel } from "helpers.js";
 import keycode from "keycode";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -141,6 +136,14 @@ const Suggestions = ({
             startAdornment: selectedItem ? (
               <Chip
                 key={selectedItem}
+                avatar={
+                  <Avatar
+                    src={`https://masternodes.online/coin_image/${getLabelKey(
+                      selectedItem
+                    )}.png`}
+                  />
+                }
+                variant={"outlined"}
                 tabIndex={-1}
                 label={selectedItem}
                 className={classes.chip}
