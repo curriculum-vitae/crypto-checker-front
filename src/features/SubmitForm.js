@@ -6,6 +6,7 @@ import React from "react";
 import Suggestions from "components/Suggestions";
 import { TextFieldEditable } from "components/TextFieldEditable";
 import { compose } from "lodash/fp";
+import { grey } from "@material-ui/core/colors";
 
 export const SubmitForm = compose(
   withState("ip", "setIP"),
@@ -61,6 +62,11 @@ export const SubmitForm = compose(
               setIsPortIsManuallyEdited(true);
             }}
             type={"number"}
+            inputProps={{
+              style: {
+                color: isPortIsManuallyEdited ? undefined : grey[600]
+              }
+            }}
             error={!!port && !isValidPort(port)}
             helperText={
               <>
