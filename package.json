@@ -12,6 +12,7 @@
     "lodash": "4.17.11",
     "react": "^16.5.2",
     "react-apollo": "2.2.4",
+    "react-detect-offline": "2.1.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.4",
     "recompose": "0.30.0",

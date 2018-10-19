@@ -3,7 +3,9 @@ import { Mutation, Subscription, withApollo } from "react-apollo";
 import { compose, setDisplayName, withState } from "recompose";
 import { convertFormToURL, getLabelKey } from "helpers.js";
 import { flow, map } from "lodash/fp";
+import { green, orange, red } from "@material-ui/core/colors";
 
+import { Detector } from "react-detect-offline";
 import React from "react";
 import { SubmitForm } from "features/SubmitForm";
 import { Unit } from "components/Unit";
@@ -85,21 +87,40 @@ export const SubmitFormWithUnits = compose(
   setDisplayName("SubmitFormWithUnits")
 )(({ setForm, form, units, setUnits }) => (
   <>
-    <Paper style={{ padding: "20px" }}>
-      <Typography variant={"h4"} align={"center"} gutterBottom>
-        Crypto Checker v0.2.0
-      </Typography>
-      <Mutation mutation={ADD_URL}>
-        {addURL => (
-          <SubmitForm
-            onSubmit={form => {
-              addURL({ variables: { url: convertFormToURL(form) } });
-              setUnits([]);
-              setForm(form);
-            }}
-          />
-        )}
-      </Mutation>
+    <Paper>
+      <Detector
+        render={({ online }) =>
+          online ? null : (
+            <Typography
+              variant={"button"}
+              style={{
+                padding: "10px",
+                backgroundColor: online ? green[600] : red[600],
+                color: "white"
+              }}
+              align={"center"}
+            >
+              {online ? "You're online" : "You are offline"}
+            </Typography>
+          )
+        }
+      />
+      <div style={{ padding: "20px" }}>
+        <Typography variant={"h4"} align={"center"} gutterBottom>
+          Crypto Checker v0.2.0
+        </Typography>
+        <Mutation mutation={ADD_URL}>
+          {addURL => (
+            <SubmitForm
+              onSubmit={form => {
+                addURL({ variables: { url: convertFormToURL(form) } });
+                setUnits([]);
+                setForm(form);
+              }}
+            />
+          )}
+        </Mutation>
+      </div>
     </Paper>
 
     <br />
