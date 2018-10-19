@@ -1,9 +1,11 @@
+import { concat, split } from "apollo-link";
+
 import { ApolloClient } from "apollo-client";
 import { HttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
-import { split } from "apollo-link";
+import { onError } from "apollo-link-error";
 
 // Create an http link:
 const httpLink = new HttpLink({
@@ -36,8 +38,24 @@ const link = split(
   httpLink
 );
 
+const errorsLink = onError(
+  ({ graphQLErrors, networkError, forward, operation }) => {
+    debugger;
+    console.log("HANDLER ERRORS");
+    if (graphQLErrors)
+      graphQLErrors.map(({ message, locations, path }) =>
+        console.log(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+        )
+      );
+
+    if (networkError) console.log(`[Network error]: ${networkError}`);
+    // return forward(operation);
+  }
+);
+
 const client = new ApolloClient({
-  link,
+  link: concat(errorsLink, link),
   cache: new InMemoryCache()
 });
 
