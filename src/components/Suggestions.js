@@ -133,6 +133,9 @@ const Suggestions = ({
           label: "Coin",
           variant: "outlined",
           InputProps: getInputProps({
+            style: {
+              caretColor: !!selectedItem ? "transparent" : undefined
+            },
             startAdornment: selectedItem ? (
               <Chip
                 key={selectedItem}
@@ -158,7 +161,11 @@ const Suggestions = ({
             onFocus: openMenu,
             type: "search",
             onChange: e => setInputValue(e.target.value),
-            disabled: !!selectedItem
+            onKeyDown: e => {
+              if (!!selectedItem & (keycode(e) === "backspace")) {
+                setSelectedItem(null);
+              }
+            }
           }),
           InputLabelProps: {
             shrink: !!selectedItem ? true : undefined
