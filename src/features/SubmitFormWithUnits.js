@@ -1,12 +1,13 @@
 import { LinearProgress, Paper, Typography } from "@material-ui/core";
 import { Mutation, Subscription, withApollo } from "react-apollo";
 import { compose, setDisplayName, withState } from "recompose";
+import { convertFormToURL, getLabelKey } from "helpers.js";
 import { flow, map } from "lodash/fp";
 
 import React from "react";
 import { SubmitForm } from "features/SubmitForm";
 import { Unit } from "components/Unit";
-import { convertFormToURL } from "helpers.js";
+import { blue } from "@material-ui/core/colors";
 import gql from "graphql-tag";
 import { isUnitsFullyLoaded } from "helpers.js";
 
@@ -79,9 +80,16 @@ export const SubmitFormWithUnits = compose(
     >
       {!!form ? (
         <React.Fragment key={convertFormToURL(form)}>
-          <Typography variant={"subtitle1"} gutterBottom align={"center"}>
-            News about <b>{convertFormToURL(form)}</b>
-          </Typography>
+          <a href={`#${getLabelKey(form.coin)}/${form.ip}:${form.port}`}>
+            <Typography
+              variant={"subtitle1"}
+              gutterBottom
+              align={"right"}
+              style={{ color: blue[700] }}
+            >
+              Permalink link
+            </Typography>
+          </a>
           <SubscriptionForNewUnits
             variables={{
               url: convertFormToURL(form)

@@ -2,12 +2,22 @@ import { find, flow } from "lodash/fp";
 
 import COINS from "coins.json";
 
+export const getLabelKey = label => {
+  const match = label.match(/([\s\S]+) \(([\s\S]+)\)/);
+  const key = match[2];
+  return key;
+};
+
+export const getLabelName = label => {
+  const match = label.match(/([\s\S]+) \(([\s\S]+)\)/);
+  const name = match[1];
+  return name;
+};
+
 export const getPort = label => {
   try {
-    const match = label.match(/([\s\S]+) \(([\s\S]+)\)/);
-
-    const key = match[2];
-    const name = match[1];
+    const key = getLabelKey(label);
+    const name = getLabelName(label);
 
     return flow(
       find(item => item[0] === key && item[1] === name),

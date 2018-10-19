@@ -1,17 +1,10 @@
-import { ApolloProvider, Query } from "react-apollo";
-import {
-  CssBaseline,
-  Grid,
-  MuiThemeProvider,
-  Paper,
-  Typography
-} from "@material-ui/core";
+import { CssBaseline, Grid, MuiThemeProvider } from "@material-ui/core";
 import React, { Component } from "react";
 
+import { ApolloProvider } from "react-apollo";
 import { SubmitFormWithUnits } from "features/SubmitFormWithUnits";
 import { Wallpaper } from "components/Wallpaper";
 import client from "apollo-client.js";
-import gql from "graphql-tag";
 import { theme } from "theme.js";
 
 class App extends Component {
