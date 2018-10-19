@@ -7,6 +7,7 @@ import React from "react";
 import Suggestions from "components/Suggestions";
 import { TextFieldEditable } from "components/TextFieldEditable";
 import { grey } from "@material-ui/core/colors";
+import keycode from "keycode";
 
 export const SubmitForm = compose(
   withState("ip", "setIP"),
@@ -63,7 +64,9 @@ export const SubmitForm = compose(
               setPort(value);
             }}
             onKeyDown={e => {
-              setIsPortIsManuallyEdited(true);
+              if (keycode(e) !== "tab") {
+                setIsPortIsManuallyEdited(true);
+              }
             }}
             type={"number"}
             inputProps={{
