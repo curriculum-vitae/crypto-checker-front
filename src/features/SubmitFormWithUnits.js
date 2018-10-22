@@ -95,8 +95,8 @@ export const SubmitFormWithUnits = compose(
             <Typography
               variant={"button"}
               style={{
+                backgroundColor: online ? green[700] : red[700],
                 padding: "10px",
-                backgroundColor: online ? green[600] : red[600],
                 color: "white"
               }}
               align={"center"}
@@ -106,6 +106,7 @@ export const SubmitFormWithUnits = compose(
           )
         }
       />
+
       <ReportConnectionWS />
       <div style={{ padding: "20px" }}>
         <Typography variant={"h4"} align={"center"} gutterBottom>

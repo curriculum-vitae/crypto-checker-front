@@ -7,7 +7,7 @@ export default new WebSocketLink({
       : `ws://localhost:4000/graphql`,
   options: {
     reconnect: true,
-    lazy: true,
+    lazy: false,
     connectionCallback: error => {
       console.log("Connection callback!");
       console.log(error);
