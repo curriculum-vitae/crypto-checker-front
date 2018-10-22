@@ -5,6 +5,7 @@ import { convertFormToURL, getLabelKey } from "helpers.js";
 import { flow, map } from "lodash/fp";
 import { green, orange, red } from "@material-ui/core/colors";
 
+import { About } from "components/About";
 import { Detector } from "react-detect-offline";
 import React from "react";
 import ReportConnectionWS from "features/ReportConnectionWS";
@@ -84,9 +85,10 @@ const SubscriptionForNewUnits = ({ variables, onSubscriptionData }) => (
 export const SubmitFormWithUnits = compose(
   withState("form", "setForm"),
   withState("units", "setUnits", []),
+  withState("isSubmitted", "setIsSubmitted", false),
   withApollo,
   setDisplayName("SubmitFormWithUnits")
-)(({ setForm, form, units, setUnits }) => (
+)(({ setForm, form, units, setUnits, isSubmitted, setIsSubmitted }) => (
   <>
     <Paper>
       <Detector
@@ -118,6 +120,7 @@ export const SubmitFormWithUnits = compose(
               onSubmit={form => {
                 addURL({ variables: { url: convertFormToURL(form) } });
                 setUnits([]);
+                setIsSubmitted(true);
                 setForm(form);
               }}
             />
@@ -125,8 +128,8 @@ export const SubmitFormWithUnits = compose(
         </Mutation>
       </div>
     </Paper>
-
     <br />
+    {isSubmitted ? null : <About />}
     <br />
     <div
       style={{
