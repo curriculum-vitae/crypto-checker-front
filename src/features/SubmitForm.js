@@ -87,7 +87,10 @@ export const SubmitForm = compose(
                       style={{
                         cursor: "pointer"
                       }}
-                      onClick={() => setPort(getPort(coin))}
+                      onClick={() => {
+                        setPort(getPort(coin));
+                        setIsPortIsManuallyEdited(false);
+                      }}
                     >
                       Reset to default ({getPort(coin)})
                     </span>
