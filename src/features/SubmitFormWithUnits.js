@@ -15,6 +15,8 @@ import { blue } from "@material-ui/core/colors";
 import gql from "graphql-tag";
 import { isUnitsFullyLoaded } from "helpers.js";
 
+const DISABLE_OFFLINE_MODULE = true;
+
 const UNITS_SUBSCRIPTION = gql`
   subscription onUnitAdded($url: String!) {
     unitAdded(url: $url) {
@@ -91,23 +93,25 @@ export const SubmitFormWithUnits = compose(
 )(({ setForm, form, units, setUnits, isSubmitted, setIsSubmitted }) => (
   <>
     <Paper>
-      <Detector
-        render={({ online }) =>
-          online ? null : (
-            <Typography
-              variant={"button"}
-              style={{
-                backgroundColor: online ? green[700] : red[700],
-                padding: "10px",
-                color: "white"
-              }}
-              align={"center"}
-            >
-              {online ? "You're online" : "You are offline"}
-            </Typography>
-          )
-        }
-      />
+      {DISABLE_OFFLINE_MODULE ? null : (
+        <Detector
+          render={({ online }) =>
+            online ? null : (
+              <Typography
+                variant={"button"}
+                style={{
+                  backgroundColor: online ? green[700] : red[700],
+                  padding: "10px",
+                  color: "white"
+                }}
+                align={"center"}
+              >
+                {online ? "You're online" : "You are offline"}
+              </Typography>
+            )
+          }
+        />
+      )}
 
       <ReportConnectionWS />
       <div style={{ padding: "20px" }}>
