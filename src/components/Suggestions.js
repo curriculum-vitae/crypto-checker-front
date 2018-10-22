@@ -162,9 +162,14 @@ const Suggestions = ({
             type: "search",
             onChange: e => setInputValue(e.target.value),
             onKeyDown: e => {
+              if (keycode(e) === "tab") return;
+              if (!!selectedItem) setSelectedItem(null);
+
+              /*
               if (!!selectedItem & (keycode(e) === "backspace")) {
                 setSelectedItem(null);
               }
+              */
             }
           }),
           InputLabelProps: {
