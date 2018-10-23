@@ -14,7 +14,7 @@ export const About = () => (
       <Typography variant={"h6"} gutterBottom>
         How can it helps you?
       </Typography>
-      <Typography variant={"body2"} paragraph>
+      <Typography variant={"body2"} paragraph component={"div"}>
         It gives you information about wellness of your masternode.
         <ul>
           <li>does it answering properly </li>
