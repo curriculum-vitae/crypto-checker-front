@@ -70,10 +70,10 @@ const SubscriptionForNewUnits = ({ variables, onSubscriptionData }) => (
 export const SubmitFormWithUnits = compose(
   withState("form", "setForm"),
   withState("units", "setUnits", []),
-  withState("isSubmitted", "setIsSubmitted", false),
+  withState("dateSubmittedAt", "setDateSubmittedAt", null),
   withApollo,
   setDisplayName("SubmitFormWithUnits")
-)(({ setForm, form, units, setUnits, isSubmitted, setIsSubmitted }) => (
+)(({ setForm, form, units, setUnits, dateSubmittedAt, setDateSubmittedAt }) => (
   <>
     <Paper>
       <ReportConnectionWS />
@@ -84,14 +84,14 @@ export const SubmitFormWithUnits = compose(
         <SubmitForm
           onSubmit={form => {
             setUnits([]);
-            setIsSubmitted(true);
+            setDateSubmittedAt(Date.now());
             setForm(form);
           }}
         />
       </div>
     </Paper>
     <br />
-    {isSubmitted ? null : <About />}
+    {dateSubmittedAt ? null : <About />}
     <br />
     <div
       style={{
@@ -110,16 +110,18 @@ export const SubmitFormWithUnits = compose(
               Permalink link
             </Typography>
           </a>
-          <SubscriptionForNewUnits
-            variables={{
-              url: convertFormToURL(form)
-            }}
-            onSubscriptionData={data => {
-              const unit = data.subscriptionData.data.unitAdded;
-              setUnits([...units, unit]);
-            }}
-          />
-
+          {dateSubmittedAt ? (
+            <SubscriptionForNewUnits
+              variables={{
+                url: convertFormToURL(form),
+                dateSubmittedAt
+              }}
+              onSubscriptionData={data => {
+                const unit = data.subscriptionData.data.unitAdded;
+                setUnits([...units, unit]);
+              }}
+            />
+          ) : null}
           {flow(
             map(unit => (
               <React.Fragment key={unit.id}>
