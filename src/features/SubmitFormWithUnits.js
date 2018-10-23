@@ -30,19 +30,6 @@ const UNITS_SUBSCRIPTION = gql`
   }
 `;
 
-const ADD_URL = gql`
-  mutation units($url: String!) {
-    urlAdd(url: $url) {
-      id
-      status
-      type
-      title
-      description
-      details
-    }
-  }
-`;
-
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -118,18 +105,13 @@ export const SubmitFormWithUnits = compose(
         <Typography variant={"h4"} align={"center"} gutterBottom>
           Crypto Checker v0.2.0
         </Typography>
-        <Mutation mutation={ADD_URL}>
-          {addURL => (
-            <SubmitForm
-              onSubmit={form => {
-                addURL({ variables: { url: convertFormToURL(form) } });
-                setUnits([]);
-                setIsSubmitted(true);
-                setForm(form);
-              }}
-            />
-          )}
-        </Mutation>
+        <SubmitForm
+          onSubmit={form => {
+            setUnits([]);
+            setIsSubmitted(true);
+            setForm(form);
+          }}
+        />
       </div>
     </Paper>
     <br />
