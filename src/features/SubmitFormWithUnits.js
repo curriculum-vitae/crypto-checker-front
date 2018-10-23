@@ -80,26 +80,6 @@ export const SubmitFormWithUnits = compose(
 )(({ setForm, form, units, setUnits, isSubmitted, setIsSubmitted }) => (
   <>
     <Paper>
-      {DISABLE_OFFLINE_MODULE ? null : (
-        <Detector
-          render={({ online }) =>
-            online ? null : (
-              <Typography
-                variant={"button"}
-                style={{
-                  backgroundColor: online ? green[700] : red[700],
-                  padding: "10px",
-                  color: "white"
-                }}
-                align={"center"}
-              >
-                {online ? "You're online" : "You are offline"}
-              </Typography>
-            )
-          }
-        />
-      )}
-
       <ReportConnectionWS />
       <div style={{ padding: "20px" }}>
         <Typography variant={"h4"} align={"center"} gutterBottom>
