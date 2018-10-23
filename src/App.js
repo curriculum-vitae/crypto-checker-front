@@ -16,7 +16,7 @@ class App extends Component {
           <Wallpaper />
           <div style={{ padding: "12px", marginTop: "-160px" }}>
             <Grid container spacing={24} justify={"center"}>
-              <Grid item xs={12} sm={8} md={6} xl={4}>
+              <Grid item xs={12} sm={10} md={6} xl={4}>
                 <SubmitFormWithUnits />
               </Grid>
             </Grid>
