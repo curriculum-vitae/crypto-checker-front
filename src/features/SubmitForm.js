@@ -50,6 +50,7 @@ export const SubmitForm = compose(
               if (!isPortIsManuallyEdited && coin && !!getPort(coin)) {
                 setPort(getPort(coin));
               }
+              if (!coin && !isPortIsManuallyEdited) setPort("");
             }}
           />
         </Grid>
@@ -62,11 +63,10 @@ export const SubmitForm = compose(
               const value = e.target.value;
               if (parseInt(value, 10) <= 0) return;
               setPort(value);
+              setIsPortIsManuallyEdited(true);
             }}
             onKeyDown={e => {
-              if (keycode(e) !== "tab") {
-                setIsPortIsManuallyEdited(true);
-              }
+              if (keycode(e) !== "tab") setIsPortIsManuallyEdited(true);
             }}
             type={"number"}
             inputProps={{

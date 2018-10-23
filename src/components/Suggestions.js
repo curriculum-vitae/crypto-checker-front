@@ -114,6 +114,9 @@ const Suggestions = ({
     inputValue={inputValue}
     selectedItem={selectedItem}
     onChange={onChange}
+    onOuterClick={e => {
+      console.log("in outer click");
+    }}
   >
     {({
       getInputProps,
@@ -124,7 +127,9 @@ const Suggestions = ({
       isOpen,
       inputValue: inputValue2,
       selectedItem: selectedItem2,
-      openMenu
+      openMenu,
+      clearSelection,
+      reset
     }) => (
       <div className={classes.container}>
         {renderInput({
@@ -136,7 +141,9 @@ const Suggestions = ({
             style: {
               caretColor: !!selectedItem ? "transparent" : undefined
             },
-            startAdornment: selectedItem ? (
+
+            onFocus: openMenu,
+            startAdornment: !!selectedItem ? (
               <Chip
                 key={selectedItem}
                 avatar={
@@ -146,34 +153,28 @@ const Suggestions = ({
                     )}.png`}
                   />
                 }
+                tabIndex={"-1000"}
                 variant={"outlined"}
-                tabIndex={-1}
                 label={selectedItem}
                 className={classes.chip}
-                onDelete={() => {
-                  setSelectedItem(null);
-                  openMenu();
+                onDelete={e => {
+                  e.preventDefault();
+                  clearSelection();
                 }}
               />
             ) : (
               undefined
             ),
-            onFocus: openMenu,
-            type: "search",
+
             onChange: e => setInputValue(e.target.value),
             onKeyDown: e => {
-              if (keycode(e) === "tab") return;
-              if (!!selectedItem) setSelectedItem(null);
-
-              /*
-              if (!!selectedItem & (keycode(e) === "backspace")) {
-                setSelectedItem(null);
-              }
-              */
+              if (!!selectedItem && keycode(e).length === 1) clearSelection();
             }
           }),
+
           InputLabelProps: {
-            shrink: !!selectedItem ? true : undefined
+            shrink: !!selectedItem ? true : undefined,
+            disableAnimation: !selectedItem
           },
           placeholder: !!selectedItem ? null : "Pick a coin"
         })}
@@ -181,13 +182,13 @@ const Suggestions = ({
           {isOpen ? (
             <Paper
               style={{
-                maxHeight: "300px",
+                maxHeight: "280px",
                 overflowY: "scroll"
               }}
               className={classes.paper}
               square
             >
-              {getSuggestions(inputValue).map((suggestion, index) =>
+              {getSuggestions(inputValue2).map((suggestion, index) =>
                 renderSuggestion({
                   suggestion,
                   index,
@@ -195,7 +196,7 @@ const Suggestions = ({
                     item: getSuggestionLabel(suggestion)
                   }),
                   highlightedIndex,
-                  selectedItem
+                  selectedItem: selectedItem2
                 })
               )}
             </Paper>
@@ -211,9 +212,10 @@ export default compose(
   withState("inputValue", "setInputValue", ""),
   withState("selectedItem", "setSelectedItem", null),
   withHandlers({
-    onChange: ({ setInputValue, setSelectedItem, selectedItem }) => item => {
-      setInputValue("");
+    onChange: ({ setInputValue, setSelectedItem, inputValue }) => item => {
+      console.log("ON CHANGE");
       setSelectedItem(item);
+      if (!!inputValue) setInputValue("");
     }
   }),
   setDisplayName("Suggestions")
