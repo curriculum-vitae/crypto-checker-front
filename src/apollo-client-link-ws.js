@@ -9,8 +9,7 @@ export default new WebSocketLink({
     reconnect: true,
     lazy: false,
     connectionCallback: error => {
-      console.log("Connection callback!");
-      console.log(error);
+      if (!!error) console.log(error);
     }
   }
 });

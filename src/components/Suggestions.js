@@ -114,9 +114,6 @@ const Suggestions = ({
     inputValue={inputValue}
     selectedItem={selectedItem}
     onChange={onChange}
-    onOuterClick={e => {
-      console.log("in outer click");
-    }}
   >
     {({
       getInputProps,
@@ -213,7 +210,6 @@ export default compose(
   withState("selectedItem", "setSelectedItem", null),
   withHandlers({
     onChange: ({ setInputValue, setSelectedItem, inputValue }) => item => {
-      console.log("ON CHANGE");
       setSelectedItem(item);
       if (!!inputValue) setInputValue("");
     }
