@@ -1,11 +1,11 @@
 import { Button, Grid, Typography } from "@material-ui/core";
-import { compose, isNumber } from "lodash/fp";
 import { getPort, isValidIP, isValidPort } from "helpers.js";
 import { setDisplayName, withState } from "recompose";
 
 import React from "react";
 import Suggestions from "components/Suggestions";
 import { TextFieldEditable } from "components/TextFieldEditable";
+import { compose } from "lodash/fp";
 import { grey } from "@material-ui/core/colors";
 import keycode from "keycode";
 

@@ -1,12 +1,10 @@
 import { LinearProgress, Paper, Typography } from "@material-ui/core";
-import { Mutation, Subscription, withApollo } from "react-apollo";
+import { Subscription, withApollo } from "react-apollo";
 import { compose, setDisplayName, withState } from "recompose";
 import { convertFormToURL, getLabelKey } from "helpers.js";
 import { flow, map } from "lodash/fp";
-import { green, orange, red } from "@material-ui/core/colors";
 
 import { About } from "components/About";
-import { Detector } from "react-detect-offline";
 import React from "react";
 import ReportConnectionWS from "features/ReportConnectionWS";
 import { SubmitForm } from "features/SubmitForm";
@@ -14,8 +12,6 @@ import { Unit } from "components/Unit";
 import { blue } from "@material-ui/core/colors";
 import gql from "graphql-tag";
 import { isUnitsFullyLoaded } from "helpers.js";
-
-const DISABLE_OFFLINE_MODULE = true;
 
 const UNITS_SUBSCRIPTION = gql`
   subscription onUnitAdded($url: String!) {

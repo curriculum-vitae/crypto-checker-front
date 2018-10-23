@@ -1,20 +1,17 @@
 import {
   Icon,
   IconButton,
-  LinearProgress,
   List,
   ListItem,
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
-  Paper,
-  Typography
+  Paper
 } from "@material-ui/core";
-import { Mutation, Subscription, withApollo } from "react-apollo";
 import { blue, green, orange, red } from "@material-ui/core/colors";
-import { compose, find, flow, map } from "lodash/fp";
 
 import React from "react";
+import { compose } from "lodash/fp";
 import { withState } from "recompose";
 
 const MAP_OF_TYPES_TO_ICONS = {

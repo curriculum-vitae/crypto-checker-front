@@ -1,10 +1,4 @@
-import {
-  CssBaseline,
-  Grid,
-  MuiThemeProvider,
-  Paper,
-  Typography
-} from "@material-ui/core";
+import { CssBaseline, Grid, MuiThemeProvider } from "@material-ui/core";
 import React, { Component } from "react";
 
 import { ApolloProvider } from "react-apollo";
@@ -20,17 +14,10 @@ class App extends Component {
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <Wallpaper />
-          <div style={{ padding: "12px" }}>
-            <Grid container spacing={24}>
-              <Grid item xs={12} sm={2} md={3} xl={4} />
+          <div style={{ padding: "12px", marginTop: "-160px" }}>
+            <Grid container spacing={24} justify={"center"}>
               <Grid item xs={12} sm={8} md={6} xl={4}>
-                <div style={{ marginTop: "-160px" }}>
-                  <SubmitFormWithUnits />
-                </div>
-                <br />
-                <br />
-                <br />
-                <br />
+                <SubmitFormWithUnits />
               </Grid>
             </Grid>
           </div>
