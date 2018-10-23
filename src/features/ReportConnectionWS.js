@@ -2,7 +2,6 @@ import { compose, lifecycle } from "recompose";
 
 import { ConnectionWarning } from "components/ConnectionWarning";
 import React from "react";
-import { Typography } from "@material-ui/core";
 import apolloClientLinkWS from "apollo-client-link-ws.js";
 
 /*
