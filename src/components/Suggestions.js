@@ -165,7 +165,12 @@ const Suggestions = ({
 
             onChange: e => setInputValue(e.target.value),
             onKeyDown: e => {
-              if (!!selectedItem && keycode(e).length === 1) clearSelection();
+              console.log(keycode(e));
+              if (
+                selectedItem &&
+                (keycode(e).length === 1 || keycode(e) === "backspace")
+              )
+                clearSelection();
             }
           }),
 
