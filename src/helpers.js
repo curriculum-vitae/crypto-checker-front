@@ -30,7 +30,7 @@ export const getPort = label => {
 };
 
 export const convertFormToURL = form =>
-  `${form.ip}:${form.port}/${getLabelKey(form.coin)}`;
+  `${getLabelKey(form.coin)}://${form.ip}:${form.port}`;
 
 export const isValidIP = ip => {
   const re = `^(25[0-5]|2[0-4][0-9]|[01]?[1-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-4]|2[0-4][0-9]|[01]?[1-9][0-9]?)$`;
