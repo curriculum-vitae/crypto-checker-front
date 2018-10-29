@@ -1,10 +1,9 @@
 import { WebSocketLink } from "apollo-link-ws";
 
+import { URI_LINK_WEBSOCKET } from "constants.js";
+
 export default new WebSocketLink({
-  uri:
-    process.env.NODE_ENV === "production"
-      ? "ws://checkmynode.com/subscriptions"
-      : `ws://checkmynode.com/subscriptions`,
+  uri: URI_LINK_WEBSOCKET,
   options: {
     reconnect: true,
     lazy: true,

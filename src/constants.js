@@ -1,26 +1,13 @@
-export const DATA_ITEMS = [
-  {
-    label: "Bitcoin",
-    port: 3123
-  },
-  {
-    label: "Ethereum",
-    port: 3100
-  },
-  {
-    label: "XRP",
-    port: 4002
-  },
-  {
-    label: "Litecoin",
-    port: 4102
-  },
-  {
-    label: "Cardano",
-    port: 4444
-  },
-  {
-    label: "Dash",
-    port: 6000
-  }
-];
+export const CONFIG_KEY = "REACT_APP_GLOBAL_NODE_CHECKER_CONFIG_$";
+
+const CONFIG = window[CONFIG_KEY] || {};
+
+export const URI_LINK_WEBSOCKET =
+  CONFIG["URI_LINK_WEBSOCKET"] || process.env.NODE_ENV === "production"
+    ? "ws://checkmynode.com/subscriptions"
+    : `ws://checkmynode.com/subscriptions`;
+
+export const URL_LINK_HTTP =
+  CONFIG["URL_LINK_HTTP"] || process.env.NODE_ENV === "production"
+    ? "/graphql"
+    : "http://127.0.0.1:8080/graphql";

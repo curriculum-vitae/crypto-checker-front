@@ -1,19 +1,12 @@
 import { concat, split } from "apollo-link";
 
 import { ApolloClient } from "apollo-client";
-import { HttpLink } from "apollo-link-http";
+
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { getMainDefinition } from "apollo-utilities";
 import { onError } from "apollo-link-error";
 import wsLink from "apollo-client-link-ws";
-
-// Create an http link:
-const httpLink = new HttpLink({
-  uri:
-    process.env.NODE_ENV === "production"
-      ? "/graphql"
-      : "http://127.0.0.1:8080/graphql"
-});
+import httpLink from "apollo-client-link-http";
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
