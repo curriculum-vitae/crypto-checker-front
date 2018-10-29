@@ -11,8 +11,8 @@ import wsLink from "apollo-client-link-ws";
 const httpLink = new HttpLink({
   uri:
     process.env.NODE_ENV === "production"
-      ? "https://crypto-checker.now.sh/graphql"
-      : "http://localhost:4000/graphql"
+      ? "/graphql"
+      : "http://127.0.0.1:8080/graphql"
 });
 
 // using the ability to split links, you can send data to each link

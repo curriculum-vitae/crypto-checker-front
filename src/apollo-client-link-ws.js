@@ -3,8 +3,8 @@ import { WebSocketLink } from "apollo-link-ws";
 export default new WebSocketLink({
   uri:
     process.env.NODE_ENV === "production"
-      ? "wss://crypto-checker.now.sh/graphql"
-      : `ws://localhost:4000/graphql`,
+      ? "ws://checkmynode.com/subscriptions"
+      : `ws://127.0.0.1:8080/subscriptions`,
   options: {
     reconnect: true,
     lazy: false,

@@ -16,7 +16,7 @@ import { isUnitsFullyLoaded } from "helpers.js";
 
 const UNITS_SUBSCRIPTION = gql`
   subscription onUnitAdded($url: String!) {
-    unitAdded(url: $url) {
+    nodeInfo(url: $url) {
       id
       status
       type
@@ -33,7 +33,7 @@ export const SubmitFormWithUnits = compose(
   withState("dateSubmittedAt", "setDateSubmittedAt", null),
   withHandlers({
     onSubscriptionData: ({ setUnits, units }) => data => {
-      const unit = data.subscriptionData.data.unitAdded;
+      const unit = data.subscriptionData.data.nodeInfo;
       setUnits([...units, unit]);
     }
   }),
@@ -53,7 +53,7 @@ export const SubmitFormWithUnits = compose(
         <ReportConnectionWS />
         <div style={{ padding: "20px" }}>
           <Typography variant={"h4"} align={"center"} gutterBottom>
-            Crypto Checker v0.2.0
+            Let's check your node!
           </Typography>
           <SubmitForm
             onSubmit={form => {
