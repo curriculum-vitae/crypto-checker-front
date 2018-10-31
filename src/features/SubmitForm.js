@@ -1,5 +1,5 @@
 import { Button, Grid, Typography } from "@material-ui/core";
-import { getPort, isValidIP, isValidPort } from "helpers.js";
+import { getPort, isValidIP, isValidPort, convertFormToURL } from "helpers.js";
 import { setDisplayName, withState } from "recompose";
 
 import React from "react";
@@ -15,6 +15,7 @@ export const SubmitForm = compose(
   // @material-ui/core forces to set initial state so animation works properly
   withState("port", "setPort", ""),
   withState("coin", "setCoin"),
+  withState("hash", "setHash"),
   withState("isPortIsManuallyEdited", "setIsPortIsManuallyEdited", false),
   setDisplayName("SubmitForm")
 )(
@@ -22,6 +23,8 @@ export const SubmitForm = compose(
     ip,
     port,
     coin,
+    hash,
+    setHash,
     setIP,
     setPort,
     setCoin,
@@ -108,8 +111,18 @@ export const SubmitForm = compose(
       <Button
         color={"primary"}
         variant={"contained"}
-        onClick={() => onSubmit({ ip, port, coin })}
-        disabled={!port || !coin || !ip || !isValidIP(ip) || !isValidPort(port)}
+        onClick={() => {
+          setHash(convertFormToURL({ ip, port, coin }));
+          onSubmit({ ip, port, coin });
+        }}
+        disabled={
+          !port ||
+          !coin ||
+          !ip ||
+          !isValidIP(ip) ||
+          !isValidPort(port) ||
+          convertFormToURL({ ip, port, coin }) === hash
+        }
       >
         Check
       </Button>
