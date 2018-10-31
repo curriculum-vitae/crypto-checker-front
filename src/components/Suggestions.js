@@ -110,6 +110,7 @@ const Suggestions = ({
 }) => (
   <Downshift
     id="coins-picker"
+    initialInputValue={""}
     onSelect={onSelect}
     inputValue={inputValue}
     selectedItem={selectedItem}
@@ -125,8 +126,7 @@ const Suggestions = ({
       inputValue: inputValue2,
       selectedItem: selectedItem2,
       openMenu,
-      clearSelection,
-      reset
+      clearSelection
     }) => (
       <div className={classes.container}>
         {renderInput({
@@ -212,7 +212,11 @@ const Suggestions = ({
 export default compose(
   withStyles(styles),
   withState("inputValue", "setInputValue", ""),
-  withState("selectedItem", "setSelectedItem", null),
+  withState(
+    "selectedItem",
+    "setSelectedItem",
+    ({ selectedItem }) => selectedItem
+  ),
   withHandlers({
     onChange: ({ setInputValue, setSelectedItem, inputValue }) => item => {
       setSelectedItem(item);

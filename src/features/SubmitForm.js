@@ -1,6 +1,6 @@
 import { Button, Grid, Typography } from "@material-ui/core";
 import { getPort, isValidIP, isValidPort, convertFormToURL } from "helpers.js";
-import { setDisplayName, withState } from "recompose";
+import { setDisplayName, withState, defaultProps } from "recompose";
 
 import React from "react";
 import Suggestions from "components/Suggestions";
@@ -10,11 +10,19 @@ import { grey } from "@material-ui/core/colors";
 import keycode from "keycode";
 
 export const SubmitForm = compose(
-  withState("ip", "setIP"),
+  defaultProps({
+    initialValues: {}
+  }),
+  withState("ip", "setIP", ({ initialValues }) => initialValues.ip),
   // TODO
-  // @material-ui/core forces to set initial state so animation works properly
-  withState("port", "setPort", ""),
-  withState("coin", "setCoin"),
+  // @material-ui/core forces to set initial state to an empty string so animation works properly
+  withState("port", "setPort", ({ initialValues }) => initialValues.port || ""),
+  withState(
+    "coin",
+    "setCoin",
+    ({ initialValues }) =>
+      initialValues.coin ? `TODO (${initialValues.coin})` : undefined
+  ),
   withState("hash", "setHash"),
   withState("isPortIsManuallyEdited", "setIsPortIsManuallyEdited", false),
   setDisplayName("SubmitForm")
@@ -43,11 +51,13 @@ export const SubmitForm = compose(
             variant={"outlined"}
             onChange={e => setIP(e.target.value)}
             error={!!ip && !isValidIP(ip)}
+            value={ip}
             helperText={!!ip && !isValidIP(ip) ? "IP is not valid" : undefined}
           />
         </Grid>
         <Grid item xs={8} sm={9}>
           <Suggestions
+            selectedItem={coin}
             onSelect={coin => {
               setCoin(coin);
               if (!isPortIsManuallyEdited && coin && !!getPort(coin)) {
@@ -61,6 +71,7 @@ export const SubmitForm = compose(
           <TextFieldEditable
             label={"Port"}
             fullWidth
+            value={port}
             variant={"outlined"}
             onChange={e => {
               const value = e.target.value;

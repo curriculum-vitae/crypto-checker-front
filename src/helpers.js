@@ -18,7 +18,6 @@ export const getPort = label => {
   try {
     const key = getLabelKey(label);
     const name = getLabelName(label);
-
     return flow(
       find(item => item[0] === key && item[1] === name),
       item => (!!item ? item[2] : null)
@@ -34,9 +33,7 @@ export const convertFormToURL = form =>
 
 export const isValidIP = ip => {
   const re = `^(25[0-5]|2[0-4][0-9]|[01]?[1-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-4]|2[0-4][0-9]|[01]?[1-9][0-9]?)$`;
-
   const regExp = new RegExp(re);
-
   return regExp.test(ip);
 };
 

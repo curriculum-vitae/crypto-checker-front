@@ -1,7 +1,7 @@
 import { LinearProgress, Paper, Typography } from "@material-ui/core";
 import { compose, setDisplayName, withHandlers, withState } from "recompose";
 import { convertFormToURL, getLabelKey } from "helpers.js";
-import { flow, map } from "lodash/fp";
+import { flow, map, replace, split } from "lodash/fp";
 
 import { About } from "components/About";
 import ErrorBoundary from "components/ErrorBoundary";
@@ -37,11 +37,15 @@ export const SubmitFormWithUnits = compose(
       setUnits([...units, unit]);
     }
   }),
+  withState("hashFromURL", "setHashFromURL", () => {
+    return window.location.hash;
+  }),
   setDisplayName("SubmitFormWithUnits")
 )(
   ({
     setForm,
     form,
+    hashFromURL,
     units,
     setUnits,
     dateSubmittedAt,
@@ -56,6 +60,21 @@ export const SubmitFormWithUnits = compose(
             Let's check your node!
           </Typography>
           <SubmitForm
+            initialValues={flow(
+              replace("#", ""),
+              split("/"),
+              arr => {
+                try {
+                  return {
+                    coin: arr[0],
+                    ip: arr[1].split(":")[0],
+                    port: arr[1].split(":")[1]
+                  };
+                } catch (e) {
+                  return {};
+                }
+              }
+            )(hashFromURL)}
             onSubmit={form => {
               setUnits([]);
               setDateSubmittedAt(Date.now());
