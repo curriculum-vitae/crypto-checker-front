@@ -54,33 +54,53 @@ const convertFormToHash = form =>
 
 export const SubmitFormWithUnits = compose(
   withState("form", "setForm"),
+  withState("isResendIsAllowed", "setIsResendIsAllowed", false),
   withState("units", "setUnits", []),
   withState("dateSubmittedAt", "setDateSubmittedAt", null),
   withHandlers({
     addUnit: ({ setUnits, units }) => unit => setUnits([...units, unit])
   }),
   withHandlers({
-    onSubscriptionData: ({ addUnit }) => ({
+    onSubscriptionData: ({ addUnit, units, setIsResendIsAllowed }) => ({
       subscriptionData: {
         data: { nodeInfo }
       }
-    }) => addUnit(nodeInfo),
-    onDisconnected: ({ units, addUnit }) => () => {
-      const isLoaded = isUnitsFullyLoaded(units);
-      isLoaded
-        ? addUnit({
-            id: Date.now(),
-            type: "okay",
-            title: "Connection succesfuly closed"
-          })
-        : addUnit({
-            id: Date.now(),
-            type: "error",
-            title: "Connection exploded",
-            description: "Please reload the page or try again"
-          });
+    }) => {
+      addUnit(nodeInfo);
+
+      /* TODO
+       - Will explode
+      */
+      if (nodeInfo.status === "resolved") {
+        setIsResendIsAllowed(true);
+      }
     },
-    onSubmit: ({ setUnits, setDateSubmittedAt, setForm }) => form => {
+    onDisconnected: ({ units, addUnit, setIsResendIsAllowed }) => () => {
+      const isUnitsAreFullyLoaded = isUnitsFullyLoaded(units);
+
+      if (isUnitsAreFullyLoaded) {
+        addUnit({
+          id: Date.now(),
+          type: "okay",
+          title: "Connection succesfuly closed"
+        });
+      } else {
+        addUnit({
+          id: Date.now(),
+          type: "error",
+          title: "Connection exploded",
+          description: "Please reload the page or try again"
+        });
+      }
+      setIsResendIsAllowed(true);
+    },
+    onSubmit: ({
+      setUnits,
+      setDateSubmittedAt,
+      setForm,
+      setIsResendIsAllowed
+    }) => form => {
+      setIsResendIsAllowed(false);
       setUnits([]);
       setDateSubmittedAt(Date.now());
       setForm(form);
@@ -98,7 +118,8 @@ export const SubmitFormWithUnits = compose(
     onSubmit,
     dateSubmittedAt,
     onSubscriptionData,
-    onDisconnected
+    onDisconnected,
+    isResendIsAllowed
   }) => (
     <ErrorBoundary>
       <Paper>
@@ -111,6 +132,7 @@ export const SubmitFormWithUnits = compose(
             Let's check your node!
           </Typography>
           <SubmitForm
+            isResendIsAllowed={isResendIsAllowed}
             initialValues={convertHashToForm(hash)}
             onSubmit={onSubmit}
           />

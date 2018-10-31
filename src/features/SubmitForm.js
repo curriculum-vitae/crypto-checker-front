@@ -11,7 +11,8 @@ import keycode from "keycode";
 
 export const SubmitForm = compose(
   defaultProps({
-    initialValues: {}
+    initialValues: {},
+    isResendIsAllowed: false
   }),
   withState("ip", "setIP", ({ initialValues }) => initialValues.ip),
   // TODO
@@ -38,6 +39,7 @@ export const SubmitForm = compose(
     setCoin,
     onSubmit,
     isPortIsManuallyEdited,
+    isResendIsAllowed,
     setIsPortIsManuallyEdited
   }) => (
     <>
@@ -132,7 +134,7 @@ export const SubmitForm = compose(
           !ip ||
           !isValidIP(ip) ||
           !isValidPort(port) ||
-          convertFormToURL({ ip, port, coin }) === hash
+          (convertFormToURL({ ip, port, coin }) === hash && !isResendIsAllowed)
         }
       >
         Check
