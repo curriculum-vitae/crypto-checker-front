@@ -4,8 +4,8 @@ const CONFIG = window[CONFIG_KEY] || {};
 
 export const URI_LINK_WEBSOCKET =
   CONFIG["URI_LINK_WEBSOCKET"] || process.env.NODE_ENV === "production"
-    ? "ws://checkmynode.com/subscriptions"
-    : `ws://checkmynode.com/subscriptions`;
+    ? "wss://checkmynode.com/subscriptions"
+    : `wss://checkmynode.com/subscriptions`;
 
 export const URL_LINK_HTTP =
   CONFIG["URL_LINK_HTTP"] || process.env.NODE_ENV === "production"
