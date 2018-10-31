@@ -28,8 +28,7 @@ export default compose(
       - Test.
     */
     componentWillUnmount() {
-      const offs = this.offs;
-      offs.forEach(off => off());
+      this.offs.forEach(off => off());
     }
   })
 )(

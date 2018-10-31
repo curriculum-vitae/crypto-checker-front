@@ -27,6 +27,25 @@ const UNITS_SUBSCRIPTION = gql`
   }
 `;
 
+const convertHashToForm = flow(
+  replace("#", ""),
+  split("/"),
+  arr => {
+    try {
+      return {
+        coin: arr[0],
+        ip: arr[1].split(":")[0],
+        port: arr[1].split(":")[1]
+      };
+    } catch (e) {
+      return {};
+    }
+  }
+);
+
+const convertFormToHash = form =>
+  `#${getLabelKey(form.coin)}/${form.ip}:${form.port}`;
+
 export const SubmitFormWithUnits = compose(
   withState("form", "setForm"),
   withState("units", "setUnits", []),
@@ -37,9 +56,7 @@ export const SubmitFormWithUnits = compose(
       setUnits([...units, unit]);
     }
   }),
-  withState("hashFromURL", "setHashFromURL", () => {
-    return window.location.hash;
-  }),
+  withState("hashFromURL", "setHashFromURL", () => window.location.hash),
   setDisplayName("SubmitFormWithUnits")
 )(
   ({
@@ -60,21 +77,7 @@ export const SubmitFormWithUnits = compose(
             Let's check your node!
           </Typography>
           <SubmitForm
-            initialValues={flow(
-              replace("#", ""),
-              split("/"),
-              arr => {
-                try {
-                  return {
-                    coin: arr[0],
-                    ip: arr[1].split(":")[0],
-                    port: arr[1].split(":")[1]
-                  };
-                } catch (e) {
-                  return {};
-                }
-              }
-            )(hashFromURL)}
+            initialValues={convertHashToForm(hashFromURL)}
             onSubmit={form => {
               setUnits([]);
               setDateSubmittedAt(Date.now());
@@ -93,7 +96,7 @@ export const SubmitFormWithUnits = compose(
       >
         {!!form ? (
           <React.Fragment key={convertFormToURL(form)}>
-            <a href={`#${getLabelKey(form.coin)}/${form.ip}:${form.port}`}>
+            <a href={convertFormToHash(form)}>
               <Typography
                 variant={"subtitle1"}
                 gutterBottom
