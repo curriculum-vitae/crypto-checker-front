@@ -7,6 +7,7 @@ export default new WebSocketLink({
   options: {
     reconnect: true,
     lazy: true,
+    inactivityTimeout: 1000 * 30,
     connectionCallback: error => {
       console.log("Connection callback");
       if (!!error) console.log(error);
