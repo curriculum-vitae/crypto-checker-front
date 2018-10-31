@@ -3,17 +3,10 @@ import { compose, deburr } from "lodash/fp";
 import { getLabelKey, getSuggestionLabel } from "helpers.js";
 import { setDisplayName, withHandlers, withState } from "recompose";
 
-import COINS from "coins.json";
 import Downshift from "downshift";
 import React from "react";
 import keycode from "keycode";
 import { withStyles } from "@material-ui/core/styles";
-
-const suggestions = COINS.map(coin => ({
-  key: coin[0],
-  name: coin[1],
-  port: coin[2]
-}));
 
 function renderInput(props) {
   const { InputProps, classes, ref, ...other } = props;
@@ -58,7 +51,7 @@ function renderSuggestion({
   );
 }
 
-function getSuggestions(value) {
+const getSuggestions = suggestions => value => {
   const inputValue = deburr(value.trim()).toLowerCase();
   const inputLength = inputValue.length;
   let count = 0;
@@ -77,7 +70,7 @@ function getSuggestions(value) {
 
         return keep;
       });
-}
+};
 
 const styles = theme => ({
   container: {
@@ -106,7 +99,7 @@ const Suggestions = ({
   inputValue,
   setInputValue,
   selectedItem,
-  setSelectedItem
+  suggestions
 }) => (
   <Downshift
     id="coins-picker"
@@ -165,7 +158,6 @@ const Suggestions = ({
 
             onChange: e => setInputValue(e.target.value),
             onKeyDown: e => {
-              console.log(keycode(e));
               if (
                 selectedItem &&
                 (keycode(e).length === 1 || keycode(e) === "backspace")
@@ -190,16 +182,17 @@ const Suggestions = ({
               className={classes.paper}
               square
             >
-              {getSuggestions(inputValue2).map((suggestion, index) =>
-                renderSuggestion({
-                  suggestion,
-                  index,
-                  itemProps: getItemProps({
-                    item: getSuggestionLabel(suggestion)
-                  }),
-                  highlightedIndex,
-                  selectedItem: selectedItem2
-                })
+              {getSuggestions(suggestions)(inputValue2).map(
+                (suggestion, index) =>
+                  renderSuggestion({
+                    suggestion,
+                    index,
+                    itemProps: getItemProps({
+                      item: getSuggestionLabel(suggestion)
+                    }),
+                    highlightedIndex,
+                    selectedItem: selectedItem2
+                  })
               )}
             </Paper>
           ) : null}

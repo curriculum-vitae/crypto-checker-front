@@ -1,13 +1,20 @@
 import { Button, Grid, Typography } from "@material-ui/core";
 import { getPort, isValidIP, isValidPort, convertFormToURL } from "helpers.js";
 import { setDisplayName, withState, defaultProps } from "recompose";
-
+import COINS from "coins.json";
 import React from "react";
 import Suggestions from "components/Suggestions";
 import { TextFieldEditable } from "components/TextFieldEditable";
 import { compose } from "lodash/fp";
 import { grey } from "@material-ui/core/colors";
 import keycode from "keycode";
+
+const convertCoinsToSuggestions = data =>
+  data.map(coin => ({
+    key: coin[0],
+    name: coin[1],
+    port: coin[2]
+  }));
 
 export const SubmitForm = compose(
   defaultProps({
@@ -59,6 +66,7 @@ export const SubmitForm = compose(
         </Grid>
         <Grid item xs={8} sm={9}>
           <Suggestions
+            suggestions={convertCoinsToSuggestions(COINS)}
             selectedItem={coin}
             onSelect={coin => {
               setCoin(coin);
