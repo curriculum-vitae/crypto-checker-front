@@ -5,8 +5,8 @@ import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { getMainDefinition } from "apollo-utilities";
 import { onError } from "apollo-link-error";
-import wsLink from "apollo-client-link-ws";
-import httpLink from "apollo-client-link-http";
+import wsLink from "apollo-client-link-ws.js";
+import httpLink from "apollo-client-link-http.js";
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
