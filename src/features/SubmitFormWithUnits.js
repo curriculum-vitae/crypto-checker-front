@@ -1,5 +1,11 @@
 import { LinearProgress, Paper, Typography } from "@material-ui/core";
-import { compose, setDisplayName, withHandlers, withState } from "recompose";
+import {
+  compose,
+  setDisplayName,
+  withHandlers,
+  withState,
+  defaultProps
+} from "recompose";
 import { convertFormToURL, getLabelKey } from "helpers.js";
 import { flow, map, replace, split } from "lodash/fp";
 
@@ -51,38 +57,62 @@ export const SubmitFormWithUnits = compose(
   withState("units", "setUnits", []),
   withState("dateSubmittedAt", "setDateSubmittedAt", null),
   withHandlers({
-    onSubscriptionData: ({ setUnits, units }) => data => {
-      const unit = data.subscriptionData.data.nodeInfo;
-      setUnits([...units, unit]);
+    addUnit: ({ setUnits, units }) => unit => setUnits([...units, unit])
+  }),
+  withHandlers({
+    onSubscriptionData: ({ addUnit }) => ({
+      subscriptionData: {
+        data: { nodeInfo }
+      }
+    }) => addUnit(nodeInfo),
+    onDisconnected: ({ units, addUnit }) => () => {
+      const isLoaded = isUnitsFullyLoaded(units);
+      isLoaded
+        ? addUnit({
+            id: Date.now(),
+            type: "okay",
+            title: "Connection succesfuly closed"
+          })
+        : addUnit({
+            id: Date.now(),
+            type: "error",
+            title: "Connection exploded",
+            description: "Please reload the page or try again"
+          });
+    },
+    onSubmit: ({ setUnits, setDateSubmittedAt, setForm }) => form => {
+      setUnits([]);
+      setDateSubmittedAt(Date.now());
+      setForm(form);
     }
   }),
-  withState("hashFromURL", "setHashFromURL", () => window.location.hash),
+  defaultProps({
+    hash: window.location.hash
+  }),
   setDisplayName("SubmitFormWithUnits")
 )(
   ({
-    setForm,
     form,
-    hashFromURL,
+    hash,
     units,
-    setUnits,
+    onSubmit,
     dateSubmittedAt,
-    setDateSubmittedAt,
-    onSubscriptionData
+    onSubscriptionData,
+    onDisconnected
   }) => (
     <ErrorBoundary>
       <Paper>
-        <ReportConnectionWS />
+        <ReportConnectionWS
+          onDisconnected={onDisconnected}
+          onError={onDisconnected}
+        />
         <div style={{ padding: "20px" }}>
           <Typography variant={"h4"} align={"center"} gutterBottom>
             Let's check your node!
           </Typography>
           <SubmitForm
-            initialValues={convertHashToForm(hashFromURL)}
-            onSubmit={form => {
-              setUnits([]);
-              setDateSubmittedAt(Date.now());
-              setForm(form);
-            }}
+            initialValues={convertHashToForm(hash)}
+            onSubmit={onSubmit}
           />
         </div>
       </Paper>

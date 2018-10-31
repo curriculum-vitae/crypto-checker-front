@@ -39,7 +39,8 @@ export const isValidIP = ip => {
 
 export const isValidPort = port => port >= 1 && port <= 65535;
 
-export const isUnitsFullyLoaded = find(unit => unit.status === "resolved");
+export const isUnitsFullyLoaded = units =>
+  !!find(unit => unit.status === "resolved")(units);
 
 export const getSuggestionLabel = suggestion => {
   return `${suggestion.name} (${suggestion.key})`;

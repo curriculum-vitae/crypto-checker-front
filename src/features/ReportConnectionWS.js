@@ -14,14 +14,13 @@ const EVENTS = ["disconnected", "error"];
 export default compose(
   lifecycle({
     componentDidMount() {
+      const { onError = () => {}, onDisconnected = () => {} } = this.props;
       this.client = apolloClientLinkWS.subscriptionClient;
-      this.offs = EVENTS.map(eventName =>
-        this.client.on(eventName, () =>
-          this.setState({
-            isDisconnectionIsDetected: true
-          })
-        )
-      );
+
+      this.offs = [];
+
+      this.offs.push(this.client.on(EVENTS[0], onDisconnected.bind(this)));
+      this.offs.push(this.client.on(EVENTS[1], onError.bind(this)));
     },
     /*
     TODO:
@@ -31,7 +30,4 @@ export default compose(
       this.offs.forEach(off => off());
     }
   })
-)(
-  ({ isDisconnectionIsDetected }) =>
-    !!isDisconnectionIsDetected ? <ConnectionWarning /> : null
-);
+)(({ isDisconnectionIsDetected }) => null);
