@@ -88,6 +88,7 @@ export const SubmitFormWithUnits = compose(
         addUnit({
           id: Date.now(),
           type: "error",
+          status: "resolved",
           title: "Connection exploded",
           description: "Please reload the page or try again"
         });
