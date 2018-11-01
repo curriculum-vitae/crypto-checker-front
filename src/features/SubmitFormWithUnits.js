@@ -79,11 +79,13 @@ export const SubmitFormWithUnits = compose(
       const isUnitsAreFullyLoaded = isUnitsFullyLoaded(units);
 
       if (isUnitsAreFullyLoaded) {
+        /*
         addUnit({
           id: Date.now(),
           type: "okay",
           title: "Connection succesfuly closed"
         });
+        */
       } else {
         addUnit({
           id: Date.now(),
