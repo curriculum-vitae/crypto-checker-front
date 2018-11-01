@@ -170,7 +170,7 @@ export const SubmitForm = compose(
                 marginTop: "12px",
                 width: "100%"
               }}
-              color={"primary"}
+              color={"secondary"}
               variant={"outlined"}
               onClick={() => {
                 setHash(convertFormToURL({ ip, port, coin }));
