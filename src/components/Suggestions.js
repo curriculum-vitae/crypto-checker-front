@@ -123,15 +123,14 @@ const Suggestions = ({
     }) => (
       <div className={classes.container}>
         {renderInput({
-          fullWidth: true,
           classes,
           label: "Coin",
           variant: "outlined",
+          fullWidth: true,
           InputProps: getInputProps({
             style: {
               caretColor: !!selectedItem ? "transparent" : undefined
             },
-
             onFocus: openMenu,
             startAdornment: !!selectedItem ? (
               <Chip
@@ -148,29 +147,24 @@ const Suggestions = ({
                 label={selectedItem}
                 className={classes.chip}
                 onDelete={e => {
-                  e.preventDefault();
                   clearSelection();
                 }}
               />
             ) : (
               undefined
             ),
-
             onChange: e => setInputValue(e.target.value),
             onKeyDown: e => {
-              if (
-                selectedItem &&
-                (keycode(e).length === 1 || keycode(e) === "backspace")
-              )
+              const isSimple = keycode(e).length === 1;
+              if (!!selectedItem && (isSimple || keycode(e) === "backspace")) {
                 clearSelection();
+              }
             }
           }),
-
           InputLabelProps: {
-            shrink: !!selectedItem ? true : undefined,
-            disableAnimation: !selectedItem
+            shrink: !!selectedItem ? true : undefined
           },
-          placeholder: !!selectedItem ? null : "Pick a coin"
+          placeholder: !!selectedItem ? undefined : "Pick a coin"
         })}
         <div {...getMenuProps()}>
           {isOpen ? (
