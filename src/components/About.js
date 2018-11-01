@@ -4,7 +4,7 @@ import React from "react";
 
 export const About = () => (
   <>
-    <Paper style={{ padding: "20px" }}>
+    <Paper style={{ padding: "20px", opacity: "0.9" }}>
       <Typography variant={"h6"} gutterBottom>
         What’s this?
       </Typography>

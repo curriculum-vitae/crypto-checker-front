@@ -1,4 +1,4 @@
-import blue from "@material-ui/core/colors/blue";
+import { blue, grey, purple, orange } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
 
 export const theme = createMuiTheme({
@@ -7,6 +7,10 @@ export const theme = createMuiTheme({
     useNextVariants: true
   },
   palette: {
-    primary: blue
+    primary: grey,
+    secondary: orange
+  },
+  shape: {
+    borderRadius: 6
   }
 });

@@ -1,3 +1,16 @@
+body,
+html {
+  background-image: url("https://images.unsplash.com/photo-1517691748-56ee7506215a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ad1063eb0c1c89b2b1213c227638f44e&auto=format&fit=crop&w=1050&q=80");
+
+  background-attachment: fixed;
+
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 a {
   text-decoration: unset;
   color: unset;

@@ -1,11 +1,19 @@
-import { CssBaseline, Grid, MuiThemeProvider } from "@material-ui/core";
+import {
+  CssBaseline,
+  Typography,
+  Grid,
+  Divider,
+  MuiThemeProvider
+} from "@material-ui/core";
 import React, { Component } from "react";
 
 import { ApolloProvider } from "react-apollo";
 import { SubmitFormWithUnits } from "features/SubmitFormWithUnits";
-import { Wallpaper } from "components/Wallpaper";
+
 import client from "apollo-client.js";
 import { theme } from "theme.js";
+
+const SPACING = 24;
 
 class App extends Component {
   render() {
@@ -13,9 +21,34 @@ class App extends Component {
       <ApolloProvider client={client}>
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
-          <Wallpaper />
-          <div style={{ padding: "12px", marginTop: "-160px" }}>
-            <Grid container spacing={24} justify={"center"}>
+          <br />
+          <br />
+          <br />
+          <br />
+          <Typography
+            variant={"h3"}
+            align={"center"}
+            style={{ color: "white" }}
+          >
+            CheckMyNode.com
+          </Typography>
+
+          <Typography
+            variant={"subtitle1"}
+            align={"center"}
+            gutterBottom
+            style={{ color: "white" }}
+          >
+            Checking your nodes since 2018
+          </Typography>
+
+          <br />
+          <Divider />
+          <br />
+          <br />
+          <br />
+          <div style={{ padding: `${SPACING / 2}px` }}>
+            <Grid container spacing={SPACING} justify={"center"}>
               <Grid item xs={12} sm={10} md={6} xl={4}>
                 <SubmitFormWithUnits />
               </Grid>

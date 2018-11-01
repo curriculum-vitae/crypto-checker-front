@@ -123,22 +123,17 @@ export const SubmitFormWithUnits = compose(
     isResendIsAllowed
   }) => (
     <ErrorBoundary>
-      <Paper>
-        <ReportConnectionWS
-          onDisconnected={onDisconnected}
-          onError={onDisconnected}
-        />
-        <div style={{ padding: "20px" }}>
-          <Typography variant={"h4"} align={"center"} gutterBottom>
-            Let's check your node!
-          </Typography>
-          <SubmitForm
-            isResendIsAllowed={isResendIsAllowed}
-            initialValues={convertHashToForm(hash)}
-            onSubmit={onSubmit}
-          />
-        </div>
-      </Paper>
+      <ReportConnectionWS
+        onDisconnected={onDisconnected}
+        onError={onDisconnected}
+      />
+
+      <SubmitForm
+        isResendIsAllowed={isResendIsAllowed}
+        initialValues={convertHashToForm(hash)}
+        onSubmit={onSubmit}
+      />
+
       <br />
       {dateSubmittedAt ? null : <About />}
       <br />
