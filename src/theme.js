@@ -8,7 +8,7 @@ export const theme = createMuiTheme({
   },
   palette: {
     primary: grey,
-    secondary: orange
+    secondary: blue
   },
   shape: {
     borderRadius: 6

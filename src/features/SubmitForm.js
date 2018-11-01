@@ -63,14 +63,17 @@ export const SubmitForm = compose(
     setIsPortIsManuallyEdited
   }) => (
     <Paper>
-      <div style={{ padding: "30px 0px 0px 30px" }}>
+      <div style={{ padding: "28px 0px 0px 28px" }}>
         <Typography variant={"h6"} gutterBottom>
           Let's check your node!
         </Typography>
       </div>
-      <Stepper orientation={"vertical"} style={{ borderRadius: "6px" }}>
+      <Stepper
+        orientation={"vertical"}
+        style={{ borderRadius: "6px", marginTop: "0px", paddingTop: "0px" }}
+      >
         <Step active completed={!!coin}>
-          <StepLabel>Pick a coin</StepLabel>
+          <StepLabel icon={<Icon>label</Icon>}>Pick a coin</StepLabel>
           <StepContent>
             <Suggestions
               suggestions={convertCoinsToSuggestions(COINS)}
@@ -86,7 +89,9 @@ export const SubmitForm = compose(
           </StepContent>
         </Step>
         <Step active completed={!!port && !!ip}>
-          <StepLabel>Set up an address</StepLabel>
+          <StepLabel icon={<Icon>location_on</Icon>}>
+            Set up an address
+          </StepLabel>
 
           <StepContent>
             <Grid container spacing={SPACING}>
@@ -166,7 +171,7 @@ export const SubmitForm = compose(
                 width: "100%"
               }}
               color={"primary"}
-              variant={"raised"}
+              variant={"outlined"}
               onClick={() => {
                 setHash(convertFormToURL({ ip, port, coin }));
                 onSubmit({ ip, port, coin });
