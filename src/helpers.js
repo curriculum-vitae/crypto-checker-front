@@ -1,6 +1,5 @@
 import { find, flow } from "lodash/fp";
-
-import COINS from "coins.json";
+import { COINS } from "constants.js";
 
 export const getLabelKey = label => {
   const match = label.match(/([\s\S]+) \(([\s\S]+)\)/);

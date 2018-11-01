@@ -1,7 +1,7 @@
 import { Button, Grid, Typography, TextField } from "@material-ui/core";
 import { getPort, isValidIP, isValidPort, convertFormToURL } from "helpers.js";
 import { setDisplayName, withState, defaultProps } from "recompose";
-import COINS from "coins.json";
+import { COINS } from "constants.js";
 import React from "react";
 import Suggestions from "components/Suggestions";
 
