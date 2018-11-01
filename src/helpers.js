@@ -36,7 +36,10 @@ export const isValidIP = ip => {
   return regExp.test(ip);
 };
 
-export const isValidPort = port => port >= 1 && port <= 65535;
+export const isValidPort = port => {
+  const num = parseInt(port);
+  return num >= 1 && num <= 65535 && parseInt(port) === parseFloat(port);
+};
 
 export const isUnitsFullyLoaded = units =>
   !!find(unit => unit.status === "resolved")(units);

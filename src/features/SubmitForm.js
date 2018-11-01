@@ -82,26 +82,11 @@ export const SubmitForm = compose(
             label={"Port"}
             fullWidth
             variant={"outlined"}
-            onChange={e => {
-              const value = e.target.value;
-              if (parseInt(value, 10) <= 0) return;
-              setPort(value);
-              setIsPortIsManuallyEdited(true);
-            }}
             onKeyDown={e => {
+              if (keycode(e) === ".") e.preventDefault();
               if (keycode(e) !== "tab") setIsPortIsManuallyEdited(true);
             }}
             type={"number"}
-            inputProps={{
-              style: {
-                color:
-                  Number(getPort(coin)) === Number(port)
-                    ? grey[600]
-                    : isPortIsManuallyEdited
-                      ? undefined
-                      : grey[600]
-              }
-            }}
             error={!!port && !isValidPort(port)}
             helperText={
               <>
@@ -127,7 +112,23 @@ export const SubmitForm = compose(
               </>
             }
             InputProps={{
-              value: port
+              style: {
+                color:
+                  Number(getPort(coin)) === Number(port)
+                    ? grey[600]
+                    : isPortIsManuallyEdited
+                      ? undefined
+                      : grey[600]
+              },
+              value: port,
+              onChange: e => {
+                const value = e.target.value;
+                const valueParsed = parseInt(value, 10);
+
+                if (valueParsed <= 0) return;
+                setPort(valueParsed);
+                setIsPortIsManuallyEdited(true);
+              }
             }}
           />
         </Grid>
