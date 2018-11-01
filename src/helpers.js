@@ -17,9 +17,8 @@ export const getLabelName = label => {
 export const getPort = label => {
   try {
     const key = getLabelKey(label);
-    const name = getLabelName(label);
     return flow(
-      find(item => item[0] === key && item[1] === name),
+      find(item => item[0] === key),
       item => (!!item ? item[2] : null)
     )(COINS);
   } catch (e) {

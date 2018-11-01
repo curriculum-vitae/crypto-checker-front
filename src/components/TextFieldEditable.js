@@ -5,10 +5,4 @@ import { withState } from "recompose";
 
 export const TextFieldEditable = flow(
   withState("value", "setValue", ({ value }) => value)
-)(({ value, setValue, ...props }) => (
-  <TextField
-    value={value}
-    onChange={e => setValue(e.target.value)}
-    {...props}
-  />
-));
+)(({ ...props }) => <TextField {...props} />);

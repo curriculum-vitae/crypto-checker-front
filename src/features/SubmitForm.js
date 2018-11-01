@@ -1,10 +1,10 @@
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Typography, TextField } from "@material-ui/core";
 import { getPort, isValidIP, isValidPort, convertFormToURL } from "helpers.js";
 import { setDisplayName, withState, defaultProps } from "recompose";
 import COINS from "coins.json";
 import React from "react";
 import Suggestions from "components/Suggestions";
-import { TextFieldEditable } from "components/TextFieldEditable";
+
 import { compose } from "lodash/fp";
 import { grey } from "@material-ui/core/colors";
 import keycode from "keycode";
@@ -53,15 +53,15 @@ export const SubmitForm = compose(
       <br />
       <Grid container spacing={16}>
         <Grid item xs={12}>
-          <TextFieldEditable
+          <TextField
             autoFocus={false}
-            label={"IP"}
-            fullWidth
-            variant={"outlined"}
-            onChange={e => setIP(e.target.value)}
             error={!!ip && !isValidIP(ip)}
-            value={ip}
+            fullWidth
             helperText={!!ip && !isValidIP(ip) ? "IP is not valid" : undefined}
+            label={"IP"}
+            onChange={e => setIP(e.target.value)}
+            value={ip}
+            variant={"outlined"}
           />
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -78,10 +78,9 @@ export const SubmitForm = compose(
           />
         </Grid>
         <Grid item xs={4} sm={3}>
-          <TextFieldEditable
+          <TextField
             label={"Port"}
             fullWidth
-            value={port}
             variant={"outlined"}
             onChange={e => {
               const value = e.target.value;
@@ -95,7 +94,12 @@ export const SubmitForm = compose(
             type={"number"}
             inputProps={{
               style: {
-                color: isPortIsManuallyEdited ? undefined : grey[600]
+                color:
+                  Number(getPort(coin)) === Number(port)
+                    ? grey[600]
+                    : isPortIsManuallyEdited
+                      ? undefined
+                      : grey[600]
               }
             }}
             error={!!port && !isValidPort(port)}
