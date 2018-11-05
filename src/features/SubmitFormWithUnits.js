@@ -177,6 +177,7 @@ export const SubmitFormWithUnits = compose(
 
             {isUnitsFullyLoaded(units) ? (
               <>
+                <br />
                 <Typography
                   variant={"subtitle1"}
                   gutterBottom

@@ -24,7 +24,7 @@ export default compose(
       padding: "20px"
     }}
   >
-    <Typography variant={"h5"}>Subscribe to get excited</Typography>
+    <Typography variant={"h6"}>Subscribe to get excited</Typography>
     <form onSubmit={onSubmit}>
       <TextField
         variant={"outlined"}
