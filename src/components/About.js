@@ -23,7 +23,7 @@ export const About = () => (
         style={{ color: "white" }}
       >
         It gives you information about wellness of your masternode.
-        <Typography style={{ color: "white" }}>
+        <Typography style={{ color: "white" }} component={"div"}>
           <ul>
             <li>does it answering properly </li>
             <li>does it operating in a right network</li>
