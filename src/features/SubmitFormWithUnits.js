@@ -176,20 +176,22 @@ export const SubmitFormWithUnits = compose(
             )(units)}
 
             {isUnitsFullyLoaded(units) ? (
-              <Typography
-                variant={"subtitle1"}
-                gutterBottom
-                align={"center"}
-                style={{ color: "white" }}
-              >
-                All checks are done!
-              </Typography>
+              <>
+                <Typography
+                  variant={"subtitle1"}
+                  gutterBottom
+                  align={"center"}
+                  style={{ color: "white" }}
+                >
+                  All checks are done!
+                </Typography>
+                <Email />
+              </>
             ) : (
               <LinearProgress />
             )}
           </React.Fragment>
         ) : null}
-        {!!showEmailBox ? <Email /> : null}
       </div>
     </ErrorBoundary>
   )
