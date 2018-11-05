@@ -156,7 +156,7 @@ export const SubmitFormWithUnits = compose(
                 align={"right"}
                 style={{ color: blue[700] }}
               >
-                Permalink link
+                Direct link to this check
               </Typography>
             </a>
             <Subscription
