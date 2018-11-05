@@ -19,6 +19,7 @@ import { Unit } from "components/Unit";
 import { blue } from "@material-ui/core/colors";
 import gql from "graphql-tag";
 import { isUnitsFullyLoaded } from "helpers.js";
+import Email from "components/Email";
 
 const UNITS_SUBSCRIPTION = gql`
   subscription onUnitAdded($url: String!) {
@@ -54,6 +55,7 @@ const convertFormToHash = form =>
 
 export const SubmitFormWithUnits = compose(
   withState("form", "setForm"),
+  withState("showEmailBox", "setShowEmailBox", true),
   withState("isResendIsAllowed", "setIsResendIsAllowed", false),
   withState("units", "setUnits", []),
   withState("dateSubmittedAt", "setDateSubmittedAt", null),
@@ -122,7 +124,8 @@ export const SubmitFormWithUnits = compose(
     dateSubmittedAt,
     onSubscriptionData,
     onDisconnected,
-    isResendIsAllowed
+    isResendIsAllowed,
+    showEmailBox
   }) => (
     <ErrorBoundary>
       <ReportConnectionWS
@@ -144,6 +147,7 @@ export const SubmitFormWithUnits = compose(
           minHeight: "320px"
         }}
       >
+        {!!showEmailBox ? <Email /> : null}
         {!!form ? (
           <React.Fragment key={convertFormToURL(form)}>
             <a href={convertFormToHash(form)}>
@@ -171,6 +175,7 @@ export const SubmitFormWithUnits = compose(
                 </div>
               ))
             )(units)}
+
             {isUnitsFullyLoaded(units) ? (
               <Typography
                 variant={"subtitle1"}
