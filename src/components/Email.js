@@ -24,11 +24,10 @@ export default compose(
       padding: "20px"
     }}
   >
-    <Typography variant={"h5"} gutterBottom>
-      Subscribe to get excited
-    </Typography>
+    <Typography variant={"h5"}>Subscribe to get excited</Typography>
     <form onSubmit={onSubmit}>
       <TextField
+        variant={"outlined"}
         placeholder={"Email"}
         fullWidth
         error={!!value && !isValidEmail(value)}
@@ -37,6 +36,7 @@ export default compose(
             ? "Please enter a valid email"
             : undefined
         }
+        margin={"normal"}
         value={value}
         onChange={e => setValue(e.target.value)}
         InputProps={{

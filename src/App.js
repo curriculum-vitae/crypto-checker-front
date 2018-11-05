@@ -54,6 +54,22 @@ class App extends Component {
               </Grid>
             </Grid>
           </div>
+          <Typography
+            align={"center"}
+            style={{ color: "white", opacity: "0.75" }}
+            gutterBottom
+          >
+            For any questions fill free to contact us by{" "}
+            <a href={"$"}>Telegram</a> or by email{" "}
+            <a href={`mailto:admin@checkmynodes.com`}>admin@checkmynodes.com</a>
+          </Typography>
+          <Typography
+            align={"center"}
+            style={{ color: "white", opacity: "0.75" }}
+            gutterBottom
+          >
+            <a href={"#"}>Donate BTC</a>
+          </Typography>
         </MuiThemeProvider>
       </ApolloProvider>
     );

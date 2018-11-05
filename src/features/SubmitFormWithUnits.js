@@ -147,7 +147,6 @@ export const SubmitFormWithUnits = compose(
           minHeight: "320px"
         }}
       >
-        {!!showEmailBox ? <Email /> : null}
         {!!form ? (
           <React.Fragment key={convertFormToURL(form)}>
             <a href={convertFormToHash(form)}>
@@ -190,6 +189,7 @@ export const SubmitFormWithUnits = compose(
             )}
           </React.Fragment>
         ) : null}
+        {!!showEmailBox ? <Email /> : null}
       </div>
     </ErrorBoundary>
   )
