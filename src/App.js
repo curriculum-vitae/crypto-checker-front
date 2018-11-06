@@ -68,7 +68,7 @@ class App extends Component {
             style={{ color: "white", opacity: "0.75" }}
             gutterBottom
           >
-            <a href={"#"}>Donate BTC</a>
+            Donate BTC: 3C7J6ejwQdfMYH5tx7pVysqVVqkNX7RPBa
           </Typography>
         </MuiThemeProvider>
       </ApolloProvider>
