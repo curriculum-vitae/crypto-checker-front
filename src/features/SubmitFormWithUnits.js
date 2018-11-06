@@ -20,6 +20,7 @@ import { blue } from "@material-ui/core/colors";
 import gql from "graphql-tag";
 import { isUnitsFullyLoaded } from "helpers.js";
 import Email from "components/Email";
+import { Mutation } from "react-apollo";
 
 const UNITS_SUBSCRIPTION = gql`
   subscription onUnitAdded($url: String!) {
@@ -30,6 +31,15 @@ const UNITS_SUBSCRIPTION = gql`
       title
       description
       details
+    }
+  }
+`;
+
+const ADD_EMAIL = gql`
+  mutation AddEmail($email: String!) {
+    addEmail(email: $email) {
+      id
+      email
     }
   }
 `;
@@ -142,6 +152,7 @@ export const SubmitFormWithUnits = compose(
       <br />
       {dateSubmittedAt ? null : <About />}
       <br />
+
       <div
         style={{
           minHeight: "320px"
@@ -186,7 +197,15 @@ export const SubmitFormWithUnits = compose(
                 >
                   All checks are done!
                 </Typography>
-                <Email />
+                <Mutation mutation={ADD_EMAIL}>
+                  {(addEmail, { data }) => (
+                    <Email
+                      onSubmit={({ email }) =>
+                        addEmail({ variables: { email } })
+                      }
+                    />
+                  )}
+                </Mutation>
               </>
             ) : (
               <LinearProgress />

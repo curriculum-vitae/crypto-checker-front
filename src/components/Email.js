@@ -11,12 +11,18 @@ import { compose, setDisplayName, withState, withHandlers } from "recompose";
 
 export default compose(
   withState("value", "setValue", ""),
+
   withHandlers({
-    onSubmit: props => e => {
-      window.alert("API Call (TODO)");
+    onSubmit: ({ onSubmit, value, setValue }) => e => {
       e.preventDefault();
+      if (isValidEmail(value)) {
+        onSubmit({ email: value });
+        setValue("");
+        window.alert("You've been subscribed!");
+      }
     }
   }),
+
   setDisplayName("Email")
 )(({ onSubmit, value, setValue }) => (
   <Paper
