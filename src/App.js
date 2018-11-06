@@ -60,7 +60,7 @@ class App extends Component {
             gutterBottom
           >
             For any questions fill free to contact us by{" "}
-            <a href={"$"}>Telegram</a> or by email{" "}
+            Telegram: <a href={"https://t.me/nodechecker"}>@nodechecker</a> or by email{" "}
             <a href={`mailto:admin@checkmynodes.com`}>admin@checkmynodes.com</a>
           </Typography>
           <Typography
