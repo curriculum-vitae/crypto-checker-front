@@ -60,7 +60,7 @@ class App extends Component {
             gutterBottom
           >
             For any questions fill free to contact us by{" "}
-            <a href={"$"}>Telegram</a> or by email{" "}
+            Telegram: <a href={"https://t.me/nodechecker"}>@nodechecker</a> or by email{" "}
             <a href={`mailto:admin@checkmynodes.com`}>admin@checkmynodes.com</a>
           </Typography>
           <Typography
@@ -68,7 +68,7 @@ class App extends Component {
             style={{ color: "white", opacity: "0.75" }}
             gutterBottom
           >
-            <a href={"#"}>Donate BTC</a>
+            Donate BTC: 3C7J6ejwQdfMYH5tx7pVysqVVqkNX7RPBa
           </Typography>
         </MuiThemeProvider>
       </ApolloProvider>
