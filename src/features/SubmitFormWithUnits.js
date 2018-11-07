@@ -160,62 +160,6 @@ export const SubmitFormWithUnits = compose(
           minHeight: "320px"
         }}
       >
-        <Mutation mutation={ADD_EMAIL}>
-          {(addEmail, { called, loading, error }) => (
-            <Paper
-              style={{
-                overflow: "hidden",
-                padding: "20px",
-                visibility:
-                  !!called && !loading && !error ? "hidden" : "visible",
-                opacity: !!called && !loading && !error ? "0" : "1",
-                transition: "visibility 5s, opacity 5s linear"
-              }}
-            >
-              {loading ? (
-                <LinearProgress
-                  determinate
-                  style={{ overflow: "hidden" }}
-                  color={"secondary"}
-                />
-              ) : null}
-              {!!error && false ? (
-                <>
-                  <Typography variant={"h6"} style={{ color: red[700] }}>
-                    Error occured. Try again.
-                  </Typography>
-                  <Email
-                    onSubmit={({ email }) => addEmail({ variables: { email } })}
-                  />
-                </>
-              ) : (
-                <>
-                  {!!called ? (
-                    <Typography variant={"h6"} style={{ color: green[700] }}>
-                      You've been subscribed!
-                    </Typography>
-                  ) : (
-                    <Typography variant={"h6"}>
-                      Subscribe for updates
-                    </Typography>
-                  )}
-
-                  {!called ? (
-                    <Email
-                      onSubmit={({ email }) =>
-                        addEmail({ variables: { email } })
-                      }
-                    />
-                  ) : (
-                    <Typography variant={"subtitle1"}>
-                      Your email has been saved successfully.
-                    </Typography>
-                  )}
-                </>
-              )}
-            </Paper>
-          )}
-        </Mutation>
         {!!form ? (
           <React.Fragment key={convertFormToURL(form)}>
             <a href={convertFormToHash(form)}>
@@ -255,7 +199,70 @@ export const SubmitFormWithUnits = compose(
                 >
                   All checks are done!
                 </Typography>
-                {/* ... */}
+                <Mutation mutation={ADD_EMAIL}>
+                  {(addEmail, { called, loading, error }) => (
+                    <Paper
+                      style={{
+                        overflow: "hidden",
+                        padding: "20px",
+                        visibility:
+                          !!called && !loading && !error ? "hidden" : "visible",
+                        opacity: !!called && !loading && !error ? "0" : "1",
+                        transition: "visibility 5s, opacity 5s linear"
+                      }}
+                    >
+                      {loading ? (
+                        <LinearProgress
+                          determinate
+                          style={{ overflow: "hidden" }}
+                          color={"secondary"}
+                        />
+                      ) : null}
+                      {!!error && false ? (
+                        <>
+                          <Typography
+                            variant={"h6"}
+                            style={{ color: red[700] }}
+                          >
+                            Error occured. Try again.
+                          </Typography>
+                          <Email
+                            onSubmit={({ email }) =>
+                              addEmail({ variables: { email } })
+                            }
+                          />
+                        </>
+                      ) : (
+                        <>
+                          {!!called ? (
+                            <Typography
+                              variant={"h6"}
+                              style={{ color: green[700] }}
+                            >
+                              You've been subscribed!
+                            </Typography>
+                          ) : (
+                            <Typography variant={"h6"}>
+                              Subscribe for updates
+                            </Typography>
+                          )}
+
+                          {!called ? (
+                            <Email
+                              onSubmit={({ email }) =>
+                                addEmail({ variables: { email } })
+                              }
+                            />
+                          ) : (
+                            <Typography variant={"subtitle1"}>
+                              Your email has been saved successfully.
+                            </Typography>
+                          )}
+                        </>
+                      )}
+                    </Paper>
+                  )}
+                </Mutation>
               </>
             ) : (
               <LinearProgress />
