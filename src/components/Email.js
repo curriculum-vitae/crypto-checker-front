@@ -10,7 +10,7 @@ import { isValidEmail } from "helpers.js";
 import { compose, setDisplayName, withState, withHandlers } from "recompose";
 
 export default compose(
-  withState("value", "setValue", "rogov.dmitry@gmail.com"),
+  withState("value", "setValue", ""),
 
   withHandlers({
     onSubmit: ({ onSubmit, value, setValue }) => e => {
