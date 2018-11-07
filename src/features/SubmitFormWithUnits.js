@@ -39,7 +39,6 @@ const UNITS_SUBSCRIPTION = gql`
 const ADD_EMAIL = gql`
   mutation AddEmail($email: String!) {
     addEmail(email: $email) {
-      id
       email
     }
   }
