@@ -207,17 +207,18 @@ export const SubmitFormWithUnits = compose(
                         visibility:
                           !!called && !loading && !error ? "hidden" : "visible",
                         opacity: !!called && !loading && !error ? "0" : "1",
-                        transition: "visibility 5s, opacity 5s linear"
+                        transition: "visibility 1ms, opacity 1ms linear",
+                        transitionDelay: "5s"
                       }}
                     >
                       {loading ? (
                         <LinearProgress
-                          determinate
                           style={{ overflow: "hidden" }}
                           color={"secondary"}
                         />
                       ) : null}
-                      {!!error && false ? (
+
+                      {!!error && process.env.NODE_ENV !== "development" ? (
                         <>
                           <Typography
                             variant={"h6"}
@@ -245,7 +246,6 @@ export const SubmitFormWithUnits = compose(
                               Subscribe for updates
                             </Typography>
                           )}
-
                           {!called ? (
                             <Email
                               onSubmit={({ email }) =>
