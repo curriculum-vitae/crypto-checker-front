@@ -37,9 +37,10 @@ const UNITS_SUBSCRIPTION = gql`
 `;
 
 const ADD_EMAIL = gql`
-  mutation AddEmail($email: String!) {
-    addEmail(email: $email) {
+  mutation AddEmail($email: String!, $url: String!) {
+    addEmail(email: $email, url: $url) {
       email
+      url
     }
   }
 `;
@@ -228,7 +229,12 @@ export const SubmitFormWithUnits = compose(
                           </Typography>
                           <Email
                             onSubmit={({ email }) =>
-                              addEmail({ variables: { email } })
+                              addEmail({
+                                variables: {
+                                  email,
+                                  url: convertFormToURL(form)
+                                }
+                              })
                             }
                           />
                         </>
@@ -249,7 +255,12 @@ export const SubmitFormWithUnits = compose(
                           {!called ? (
                             <Email
                               onSubmit={({ email }) =>
-                                addEmail({ variables: { email } })
+                                addEmail({
+                                  variables: {
+                                    email,
+                                    url: convertFormToURL(form)
+                                  }
+                                })
                               }
                             />
                           ) : null}
