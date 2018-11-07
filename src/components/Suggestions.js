@@ -124,7 +124,7 @@ const Suggestions = ({
       <div className={classes.container}>
         {renderInput({
           classes,
-          label: "Coin",
+
           variant: "outlined",
           fullWidth: true,
           InputProps: getInputProps({
@@ -164,7 +164,7 @@ const Suggestions = ({
           InputLabelProps: {
             shrink: !!selectedItem ? true : undefined
           },
-          placeholder: !!selectedItem ? undefined : "Pick a coin"
+          placeholder: !!selectedItem ? undefined : "Start typing to search..."
         })}
         <div {...getMenuProps()}>
           {isOpen ? (

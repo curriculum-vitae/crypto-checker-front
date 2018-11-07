@@ -73,7 +73,7 @@ export const SubmitForm = compose(
         style={{ borderRadius: "6px", marginTop: "0px", paddingTop: "0px" }}
       >
         <Step active completed={!!coin}>
-          <StepLabel icon={<Icon>label</Icon>}>Pick a coin</StepLabel>
+          <StepLabel icon={<Icon>label</Icon>}>Choose a coin</StepLabel>
           <StepContent>
             <Suggestions
               suggestions={convertCoinsToSuggestions(COINS)}
