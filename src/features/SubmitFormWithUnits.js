@@ -253,11 +253,7 @@ export const SubmitFormWithUnits = compose(
                                 addEmail({ variables: { email } })
                               }
                             />
-                          ) : (
-                            <Typography variant={"subtitle1"}>
-                              Your email has been saved successfully.
-                            </Typography>
-                          )}
+                          ) : null}
                         </>
                       )}
                     </Paper>
