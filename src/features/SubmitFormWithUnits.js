@@ -6,6 +6,7 @@ import {
   withState,
   defaultProps
 } from "recompose";
+import { red, green } from "@material-ui/core/colors";
 import { convertFormToURL, getLabelKey } from "helpers.js";
 import { flow, map, replace, split } from "lodash/fp";
 
@@ -68,7 +69,7 @@ export const SubmitFormWithUnits = compose(
   withState("showEmailBox", "setShowEmailBox", true),
   withState("isResendIsAllowed", "setIsResendIsAllowed", false),
   withState("units", "setUnits", []),
-  withState("dateSubmittedAt", "setDateSubmittedAt", null),
+  withState("dateSubmittedAt", "setDateSubmittedAt"),
   withHandlers({
     addUnit: ({ setUnits, units }) => unit => setUnits([...units, unit])
   }),
@@ -135,6 +136,7 @@ export const SubmitFormWithUnits = compose(
     onSubscriptionData,
     onDisconnected,
     isResendIsAllowed,
+    setDateSubmittedEmailAt,
     showEmailBox
   }) => (
     <ErrorBoundary>
@@ -158,6 +160,62 @@ export const SubmitFormWithUnits = compose(
           minHeight: "320px"
         }}
       >
+        <Mutation mutation={ADD_EMAIL}>
+          {(addEmail, { called, loading, error }) => (
+            <Paper
+              style={{
+                overflow: "hidden",
+                padding: "20px",
+                visibility:
+                  !!called && !loading && !error ? "hidden" : "visible",
+                opacity: !!called && !loading && !error ? "0" : "1",
+                transition: "visibility 5s, opacity 5s linear"
+              }}
+            >
+              {loading ? (
+                <LinearProgress
+                  determinate
+                  style={{ overflow: "hidden" }}
+                  color={"secondary"}
+                />
+              ) : null}
+              {!!error && false ? (
+                <>
+                  <Typography variant={"h6"} style={{ color: red[700] }}>
+                    Error occured. Try again.
+                  </Typography>
+                  <Email
+                    onSubmit={({ email }) => addEmail({ variables: { email } })}
+                  />
+                </>
+              ) : (
+                <>
+                  {!!called ? (
+                    <Typography variant={"h6"} style={{ color: green[700] }}>
+                      You've been subscribed!
+                    </Typography>
+                  ) : (
+                    <Typography variant={"h6"}>
+                      Subscribe for updates
+                    </Typography>
+                  )}
+
+                  {!called ? (
+                    <Email
+                      onSubmit={({ email }) =>
+                        addEmail({ variables: { email } })
+                      }
+                    />
+                  ) : (
+                    <Typography variant={"subtitle1"}>
+                      Your email has been saved successfully.
+                    </Typography>
+                  )}
+                </>
+              )}
+            </Paper>
+          )}
+        </Mutation>
         {!!form ? (
           <React.Fragment key={convertFormToURL(form)}>
             <a href={convertFormToHash(form)}>
@@ -197,15 +255,7 @@ export const SubmitFormWithUnits = compose(
                 >
                   All checks are done!
                 </Typography>
-                <Mutation mutation={ADD_EMAIL}>
-                  {(addEmail, { data }) => (
-                    <Email
-                      onSubmit={({ email }) =>
-                        addEmail({ variables: { email } })
-                      }
-                    />
-                  )}
-                </Mutation>
+                {/* ... */}
               </>
             ) : (
               <LinearProgress />

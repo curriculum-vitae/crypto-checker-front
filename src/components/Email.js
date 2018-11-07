@@ -10,7 +10,7 @@ import { isValidEmail } from "helpers.js";
 import { compose, setDisplayName, withState, withHandlers } from "recompose";
 
 export default compose(
-  withState("value", "setValue", ""),
+  withState("value", "setValue", "rogov.dmitry@gmail.com"),
 
   withHandlers({
     onSubmit: ({ onSubmit, value, setValue }) => e => {
@@ -18,47 +18,38 @@ export default compose(
       if (isValidEmail(value)) {
         onSubmit({ email: value });
         setValue("");
-        window.alert("You've been subscribed!");
       }
     }
   }),
-
   setDisplayName("Email")
 )(({ onSubmit, value, setValue }) => (
-  <Paper
-    style={{
-      padding: "20px"
-    }}
-  >
-    <Typography variant={"h6"}>Subscribe for updates</Typography>
-    <form onSubmit={onSubmit}>
-      <TextField
-        variant={"outlined"}
-        placeholder={"Email"}
-        fullWidth
-        error={!!value && !isValidEmail(value)}
-        helperText={
-          !!value && !isValidEmail(value)
-            ? "Please enter a valid email"
-            : undefined
-        }
-        margin={"normal"}
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment
-              onClick={onSubmit}
-              style={{
-                cursor: "pointer"
-              }}
-              position="start"
-            >
-              <Icon>send</Icon>
-            </InputAdornment>
-          )
-        }}
-      />
-    </form>
-  </Paper>
+  <form onSubmit={onSubmit}>
+    <TextField
+      variant={"outlined"}
+      placeholder={"Email"}
+      fullWidth
+      error={!!value && !isValidEmail(value)}
+      helperText={
+        !!value && !isValidEmail(value)
+          ? "Please enter a valid email"
+          : undefined
+      }
+      margin={"normal"}
+      value={value}
+      onChange={e => setValue(e.target.value)}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment
+            onClick={onSubmit}
+            style={{
+              cursor: "pointer"
+            }}
+            position="start"
+          >
+            <Icon>send</Icon>
+          </InputAdornment>
+        )
+      }}
+    />
+  </form>
 ));
