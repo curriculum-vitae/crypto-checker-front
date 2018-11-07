@@ -8,6 +8,8 @@ import React from "react";
 import keycode from "keycode";
 import { withStyles } from "@material-ui/core/styles";
 
+const MAX_SEARCH_RESULTS = 5000;
+
 function renderInput(props) {
   const { InputProps, classes, ref, ...other } = props;
 
@@ -60,7 +62,7 @@ const getSuggestions = suggestions => value => {
     ? suggestions
     : suggestions.filter(suggestion => {
         const keep =
-          count < 5 &&
+          count < MAX_SEARCH_RESULTS &&
           (suggestion.name.slice(0, inputLength).toLowerCase() === inputValue ||
             suggestion.key.slice(0, inputLength).toLowerCase() === inputValue);
 
