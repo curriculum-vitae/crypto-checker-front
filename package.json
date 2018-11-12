@@ -1,6 +1,6 @@
 {
-  "name": "crypto-checker",
-  "version": "0.2.0",
+  "name": "checkmynode",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@material-ui/core": "3.3.0",
