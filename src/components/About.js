@@ -8,13 +8,13 @@ export const About = () => (
       style={{ padding: "20px", opacity: "0.8", backgroundColor: grey[800] }}
     >
       <Typography variant={"h6"} gutterBottom style={{ color: "white" }}>
-        What’s this?
+        What is this?
       </Typography>
       <Typography variant={"body2"} paragraph style={{ color: "white" }}>
-        This is a tool for instant check of a masternode health.
+        This is a tool to instantly check the masternode health.
       </Typography>
       <Typography variant={"h6"} gutterBottom style={{ color: "white" }}>
-        How can it helps you?
+        How can it help you?
       </Typography>
       <Typography
         variant={"body2"}
@@ -22,22 +22,22 @@ export const About = () => (
         component={"div"}
         style={{ color: "white" }}
       >
-        It gives you information about wellness of your masternode.
+        It gives you information about the condition of your masternode.
         <Typography style={{ color: "white" }} component={"div"}>
           <ul>
-            <li>does it answering properly </li>
-            <li>does it operating in a right network</li>
-            <li>what are other nodes thinking about your one</li>
-            <li>...and a lot of other useful information</li>
+            <li>Is it answering properly?</li>
+            <li>Is it operating in the right network?</li>
+            <li>What other nodes are thinking about yours?</li>
+            <li>...and a lot of other useful information.</li>
           </ul>
         </Typography>
       </Typography>
       <Typography variant={"h6"} gutterBottom style={{ color: "white" }}>
-        How it differ from others?
+        How does it differ from others?
       </Typography>
       <Typography variant={"body2"} paragraph style={{ color: "white" }}>
         This is the only service that connects to your masternode directly and
-        does a most of checks in real time.
+        conducts checks in real time.
       </Typography>
     </Paper>
   </>
