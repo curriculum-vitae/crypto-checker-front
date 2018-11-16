@@ -10,7 +10,7 @@ import React, { Component } from "react";
 
 import { ApolloProvider } from "react-apollo";
 import { SubmitFormWithUnits } from "features/SubmitFormWithUnits";
-
+import { Wallpaper } from "components/Wallpaper";
 import client from "apollo-client.js";
 import { theme } from "theme.js";
 
@@ -82,7 +82,15 @@ class App extends Component {
               style={{ color: "white", opacity: "0.75" }}
               gutterBottom
             >
-              Donate BTC: 3C7J6ejwQdfMYH5tx7pVysqVVqkNX7RPBa
+              Donate BTC:
+            </Typography>
+            <Typography
+              align={"center"}
+              style={{ color: "white", opacity: "0.75" }}
+              variant={"caption"}
+              gutterBottom
+            >
+              3C7J6ejwQdfMYH5tx7pVysqVVqkNX7RPBa
             </Typography>
           </div>
         </MuiThemeProvider>
