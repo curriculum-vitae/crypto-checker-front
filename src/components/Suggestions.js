@@ -139,7 +139,7 @@ const Suggestions = ({
                 key={selectedItem}
                 avatar={
                   <Avatar
-                    src={`https://masternodes.online/coin_image/${getLabelKey(
+                    src={`/images/coin/${getLabelKey(
                       selectedItem
                     )}.png`}
                   />
