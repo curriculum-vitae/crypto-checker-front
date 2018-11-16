@@ -74,7 +74,7 @@ export const SubmitFormWithUnits = compose(
     addUnit: ({ setUnits, units }) => unit => setUnits([...units, unit])
   }),
   withHandlers({
-    onSubscriptionData: ({ addUnit, units, setIsResendIsAllowed }) => ({
+    onSubscriptionData: ({ addUnit, setIsResendIsAllowed }) => ({
       subscriptionData: {
         data: { nodeInfo }
       }
@@ -187,7 +187,6 @@ export const SubmitFormWithUnits = compose(
                 </div>
               ))
             )(units)}
-
             {isUnitsFullyLoaded(units) ? (
               <>
                 <br />
