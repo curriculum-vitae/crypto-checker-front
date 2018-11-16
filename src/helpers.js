@@ -1,6 +1,10 @@
 import { find, flow } from "lodash/fp";
 import { COINS } from "constants.js";
 
+export const getCoinByKey = key => {
+  return flow(find(item => item[0] === key))(COINS);
+};
+
 export const getLabelKey = label => {
   const match = label.match(/([\s\S]+) \(([\s\S]+)\)/);
   const key = match[2];
@@ -13,13 +17,18 @@ export const getLabelName = label => {
   return name;
 };
 
+export const transformCoinKeyToCoinLabel = key => {
+  const item = getCoinByKey(key);
+  return `${item[1]} (${key})`;
+};
+
 export const getPort = label => {
   try {
-    const key = getLabelKey(label);
     return flow(
-      find(item => item[0] === key),
+      getLabelKey,
+      getCoinByKey,
       item => (!!item ? item[2] : null)
-    )(COINS);
+    )(label);
   } catch (e) {
     console.error("getPort exploded");
     return null;
@@ -30,7 +39,9 @@ export const convertFormToURL = form =>
   `${getLabelKey(form.coin)}://${form.ip}:${form.port}`;
 
 export const isValidIP = ip => {
-  return /^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?)$/.test(ip||"");
+  return /^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?)$/.test(
+    ip || ""
+  );
 };
 
 export const isValidPort = port => {

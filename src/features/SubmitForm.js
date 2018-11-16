@@ -10,7 +10,13 @@ import {
   StepLabel,
   TextField
 } from "@material-ui/core";
-import { getPort, isValidIP, isValidPort, convertFormToURL } from "helpers.js";
+import {
+  getPort,
+  isValidIP,
+  isValidPort,
+  convertFormToURL,
+  transformCoinKeyToCoinLabel
+} from "helpers.js";
 import { setDisplayName, withState, defaultProps } from "recompose";
 import { COINS } from "constants.js";
 import React from "react";
@@ -38,11 +44,10 @@ export const SubmitForm = compose(
   // TODO
   // @material-ui/core forces to set initial state to an empty string so animation works properly
   withState("port", "setPort", ({ initialValues }) => initialValues.port || ""),
-  withState(
-    "coin",
-    "setCoin",
-    ({ initialValues }) =>
-      initialValues.coin ? `TODO (${initialValues.coin})` : undefined
+  withState("coin", "setCoin", ({ initialValues }) =>
+    initialValues.coin
+      ? transformCoinKeyToCoinLabel(initialValues.coin)
+      : undefined
   ),
   withState("hash", "setHash"),
   withState("isPortIsManuallyEdited", "setIsPortIsManuallyEdited", false),
@@ -125,8 +130,8 @@ export const SubmitForm = compose(
                       {!!port && !isValidPort(port) ? (
                         "Port range is 1 - 65535"
                       ) : !!coin &&
-                      getPort(coin) &&
-                      parseInt(port, 10) !== parseInt(getPort(coin), 10) ? (
+                        getPort(coin) &&
+                        parseInt(port, 10) !== parseInt(getPort(coin), 10) ? (
                         <Typography variant={"caption"} gutterBottom>
                           <span
                             style={{
@@ -149,8 +154,8 @@ export const SubmitForm = compose(
                         Number(getPort(coin)) === Number(port)
                           ? grey[600]
                           : isPortIsManuallyEdited
-                            ? undefined
-                            : grey[600]
+                          ? undefined
+                          : grey[600]
                     },
                     value: port,
                     onChange: e => {
