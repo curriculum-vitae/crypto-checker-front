@@ -61,7 +61,7 @@ class App extends Component {
           >
             For any questions fill free to contact us by{" "}
             Telegram: <a href={"https://t.me/nodechecker"}>@nodechecker</a> or by email{" "}
-            <a href={`mailto:admin@checkmynodes.com`}>admin@checkmynodes.com</a>
+            <a href={`mailto:admin@checkmynode.com`}>admin@checkmynode.com</a>
           </Typography>
           <Typography
             align={"center"}
