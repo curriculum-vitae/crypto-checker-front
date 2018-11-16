@@ -3,6 +3,7 @@ import {
   Typography,
   Grid,
   Divider,
+  Hidden,
   MuiThemeProvider
 } from "@material-ui/core";
 import React, { Component } from "react";
@@ -21,55 +22,69 @@ class App extends Component {
       <ApolloProvider client={client}>
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
-          <br />
-          <br />
-          <br />
-          <br />
-          <Typography
-            variant={"h3"}
-            align={"center"}
-            style={{ color: "white" }}
-          >
-            CheckMyNode.com
-          </Typography>
 
-          <Typography
-            variant={"subtitle1"}
-            align={"center"}
-            gutterBottom
-            style={{ color: "white" }}
-          >
-            Checking your nodes since 2018
-          </Typography>
-
-          <br />
-          <Divider />
-          <br />
-          <br />
-          <br />
           <div style={{ padding: `${SPACING / 2}px` }}>
+            <br />
+            <br />
+            <br />
+            <br />
+            <Hidden xsDown>
+              <Typography
+                variant={"h3"}
+                align={"center"}
+                style={{ color: "white" }}
+                noWrap
+              >
+                CheckMyNode.com
+              </Typography>
+            </Hidden>
+            <Hidden smUp>
+              <Typography
+                variant={"h4"}
+                align={"center"}
+                style={{ color: "white" }}
+                noWrap
+              >
+                CheckMyNode.com
+              </Typography>
+            </Hidden>
+
+            <Typography
+              variant={"subtitle1"}
+              align={"center"}
+              gutterBottom
+              style={{ color: "white" }}
+            >
+              Checking your nodes since 2018
+            </Typography>
+
+            <br />
+            <Divider />
+            <br />
+            <br />
+            <br />
             <Grid container spacing={SPACING} justify={"center"}>
               <Grid item xs={12} sm={10} md={6} xl={4}>
                 <SubmitFormWithUnits />
               </Grid>
             </Grid>
+            <Typography
+              align={"center"}
+              style={{ color: "white", opacity: "0.75" }}
+              gutterBottom
+            >
+              For any questions fill free to contact us by Telegram:{" "}
+              <a href={"https://t.me/nodechecker"}>@nodechecker</a> or by email{" "}
+              <a href={`mailto:admin@checkmynode.com`}>admin@checkmynode.com</a>
+            </Typography>
+            <Typography
+              align={"center"}
+              style={{ color: "white", opacity: "0.75" }}
+              gutterBottom
+            >
+              Donate BTC: 3C7J6ejwQdfMYH5tx7pVysqVVqkNX7RPBa
+            </Typography>
           </div>
-          <Typography
-            align={"center"}
-            style={{ color: "white", opacity: "0.75" }}
-            gutterBottom
-          >
-            For any questions fill free to contact us by{" "}
-            Telegram: <a href={"https://t.me/nodechecker"}>@nodechecker</a> or by email{" "}
-            <a href={`mailto:admin@checkmynode.com`}>admin@checkmynode.com</a>
-          </Typography>
-          <Typography
-            align={"center"}
-            style={{ color: "white", opacity: "0.75" }}
-            gutterBottom
-          >
-            Donate BTC: 3C7J6ejwQdfMYH5tx7pVysqVVqkNX7RPBa
-          </Typography>
         </MuiThemeProvider>
       </ApolloProvider>
     );
