@@ -8,7 +8,7 @@ import {
 } from "recompose";
 import { red, green } from "@material-ui/core/colors";
 import { convertFormToURL, getLabelKey } from "helpers.js";
-import { flow, map, replace, split } from "lodash/fp";
+import { flow, map, filter, replace, split } from "lodash/fp";
 
 import { About } from "components/About";
 import ErrorBoundary from "components/ErrorBoundary";
@@ -104,7 +104,7 @@ export const SubmitFormWithUnits = compose(
           id: Date.now(),
           type: "error",
           status: "resolved",
-          title: "Connection exploded",
+          title: "Network connection lost",
           description: "Please reload the page or try again"
         });
       }
@@ -186,7 +186,7 @@ export const SubmitFormWithUnits = compose(
                   <Unit unit={unit} />
                 </div>
               ))
-            )(units)}
+            )(filter( u => u.type !== "empty")(units))}
             {isUnitsFullyLoaded(units) ? (
               <>
                 <br />
