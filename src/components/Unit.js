@@ -99,7 +99,7 @@ export const Unit = compose(
               width={dimensions.width}
               height={200}
               data={flow(
-                unit => unit.graph.points,
+                unit => JSON.parse(unit.graph),
                 map(point => ({
                   name: point[0],
                   value: point[1]

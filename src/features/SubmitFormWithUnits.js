@@ -32,6 +32,7 @@ const UNITS_SUBSCRIPTION = gql`
       title
       description
       details
+      graph
     }
   }
 `;
