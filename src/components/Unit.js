@@ -101,20 +101,20 @@ export const Unit = compose(
               data={flow(
                 unit => JSON.parse(unit.graph),
                 map(point => ({
-                  name: point[0],
-                  value: point[1]
+                  time: point[0],
+                  pings: point[1]
                 }))
               )(unit)}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
-              <XAxis dataKey={"name"} />
+              <XAxis dataKey={"time"} />
               <YAxis />
               <CartesianGrid strokeDasharray="3 3" />
               <Tooltip />
 
               <Line
                 type="monotone"
-                dataKey="value"
+                dataKey="pings"
                 stroke="#8884d8"
                 activeDot={{ r: 8 }}
               />
