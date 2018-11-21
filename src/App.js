@@ -73,9 +73,14 @@ class App extends Component {
               style={{ color: "white", opacity: "0.75" }}
               gutterBottom
             >
-              For any questions fill free to contact us by Telegram:{" "}
-              <a href={"https://t.me/nodechecker"}>@nodechecker</a> or by email{" "}
-              <a href={`mailto:admin@checkmynode.com`}>admin@checkmynode.com</a>
+              Chat for discussion: <a href={"https://t.me/checkmynodes"}>https://t.me/checkmynodes</a> 
+            </Typography>
+            <Typography
+              align={"center"}
+              style={{ color: "white", opacity: "0.75" }}
+              gutterBottom
+            >
+              Privat message: <a href={"https://t.me/nodechecker"}>https://t.me/nodechecker</a> or <a href={"mailto:admin@checkmynode.com"}>admin@checkmynode.com</a>
             </Typography>
             <Typography
               align={"center"}

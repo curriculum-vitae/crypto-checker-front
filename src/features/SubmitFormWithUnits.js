@@ -158,7 +158,7 @@ export const SubmitFormWithUnits = compose(
 
       <div
         style={{
-          minHeight: "320px"
+          minHeight: "120px"
         }}
       >
         {!!form ? (
